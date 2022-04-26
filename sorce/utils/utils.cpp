@@ -1,5 +1,8 @@
 #include "utils.h"
 
+std::random_device utils::rd;
+std::mt19937 utils::gen(rd());
+
 void utils::SetOrigin(Sprite& sprite, Pivots preset)
 {
 	SetOrigin(sprite, sprite.getLocalBounds(), preset);
@@ -44,4 +47,9 @@ void utils::SetOrigin(Transformable& tr, FloatRect bounds, Pivots preset)
 	default:
 		break;
 	}
+}
+
+int utils::RandomRange(int min, int max)
+{
+	return gen() % (max - min) + min;
 }

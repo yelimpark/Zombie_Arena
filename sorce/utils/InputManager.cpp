@@ -1,5 +1,6 @@
 #include "InputManager.h"
 #include <algorithm>
+#include <cmath>
 
 map<Axis, AxisInfo> InputManager::mapAxis;
 list<Keyboard::Key> InputManager::downKeys;
@@ -13,6 +14,9 @@ void InputManager::Init()
     AxisInfo info;
 
     info.axis = Axis::Horizonal;
+    info.sensi = 1.5f;
+    info.value = 0.f;
+    info.limit = 0.05f;
     info.positiveKeys.clear();
     info.positiveKeys.push_back(Keyboard::D);
     info.positiveKeys.push_back(Keyboard::Right);
@@ -23,6 +27,9 @@ void InputManager::Init()
     mapAxis[info.axis] = info;
 
     info.axis = Axis::Vertical;
+    info.sensi = 1.5f;
+    info.value = 0.f;
+    info.limit = 0.05f;
     info.positiveKeys.clear();
     info.positiveKeys.push_back(Keyboard::S);
     info.positiveKeys.push_back(Keyboard::Down);
@@ -33,16 +40,24 @@ void InputManager::Init()
     mapAxis[info.axis] = info;
 }
 
-int InputManager::GetAxis(Axis axis)
+float InputManager::GetAxis(Axis axis)
+{
+    if (mapAxis.find(axis) != mapAxis.end()) {
+        return mapAxis[axis].value;
+    }
+    return 0.0f;
+}
+
+int InputManager::GetAxisRaw(Axis axis)
 {
     auto pair = mapAxis.find(axis);
     if (pair != mapAxis.end()) {
-        return GetAxis(pair->second.positiveKeys, pair->second.negativeKeys);
+        return GetAxisRaw(pair->second.positiveKeys, pair->second.negativeKeys);
     }
     return 0;
 }
 
-int InputManager::GetAxis(const list<Keyboard::Key>& positive,const list<Keyboard::Key>& nagative)
+int InputManager::GetAxisRaw(const list<Keyboard::Key>& positive,const list<Keyboard::Key>& nagative)
 {
     int axis = 0;
 
@@ -94,6 +109,33 @@ void InputManager::ProcessInput(const Event& event)
         break;
     default:
         break;
+    }
+}
+
+void InputManager::Update(float dt)
+{
+    for (auto it = mapAxis.begin(); it != mapAxis.end(); ++it) {
+        AxisInfo& ref = it->second;
+
+        int axis = GetAxisRaw(ref.axis);
+
+        if (axis == 0) {
+            axis = ref.value > 0 ? -1 : 1;
+
+            if (abs(ref.value) < ref.limit) {
+                axis = 0;
+                ref.value = 0.f;
+            }
+        }
+
+        ref.value += axis * ref.sensi * dt;
+
+        if (ref.value > 1.f) {
+            ref.value = 1.f;
+        }
+        if (ref.value < -1.f) {
+            ref.value = -1.f;
+        }
     }
 }
 

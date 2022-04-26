@@ -6,7 +6,7 @@ using namespace sf;
 class Player
 {
 private:
-	const float START_SPEED = 200;
+	const float START_SPEED = 1000;
 	const float START_HEALTH = 100;
 	const float START_IMMUNE_MS = 200;
 	const float MAX_ACCEL = 2000;
@@ -14,7 +14,7 @@ private:
 	Vector2f position;
 
 	Sprite sprite;
-	Texture texture;
+	std::string textureFilename;
 
 	Vector2i resolution;
 	IntRect arena;
