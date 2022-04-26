@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="sorce\Bullet\Bullet.cpp" />
     <ClCompile Include="sorce\Player\Player.cpp" />
     <ClCompile Include="sorce\utils\InputManager.cpp" />
     <ClCompile Include="sorce\utils\TextureHolder.cpp" />

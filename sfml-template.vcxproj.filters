@@ -45,6 +45,9 @@
     <ClCompile Include="sorce\Zombie\Zombie.cpp">
       <Filter>소스 파일\Zombie</Filter>
     </ClCompile>
+    <ClCompile Include="sorce\Bullet\Bullet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sorce\Player\Player.h">

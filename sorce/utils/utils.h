@@ -32,4 +32,11 @@ public :
 	static void SetOrigin(Transformable& tr, FloatRect bounds, Pivots preset);
 
 	static int RandomRange(int min, int max);
+
+	static void NomalizeVector(Vector2f& vector);
+
+	static bool IsPointInArea(const Vector2f& point, float left, float top, float width, float height);
+
+	static bool IsRectInArea(const FloatRect& rect, float left, float top, float width, float height);
+
 };

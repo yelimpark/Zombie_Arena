@@ -9,7 +9,6 @@ private:
 	const float START_SPEED = 1000;
 	const float START_HEALTH = 100;
 	const float START_IMMUNE_MS = 200;
-	const float MAX_ACCEL = 2000;
 
 	Vector2f position;
 
@@ -23,9 +22,6 @@ private:
 
 	Vector2f direction;
 	float speed;
-
-	Vector2f accelDir;
-	float accel;
 
 	int health;
 	int maxHealth;

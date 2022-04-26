@@ -4,6 +4,7 @@
 #include "./Player/Player.h"
 #include "./utils/TextureHolder.h"
 #include "./Zombie/Zombie.h"
+#include "./Bullet/Bullet.h"
 #include <iostream>
 #include <random>
 
@@ -83,6 +84,19 @@ void CreateZobies(std::vector<Zombie*>& zombies, int count, IntRect arena) {
 
 }
 
+void CreateBullets(std::vector<Bullet*>& bullets, int count) {
+    for (auto v : bullets) {
+        delete v;
+    }
+
+    bullets.clear();
+
+    for (int i = 0; i < count; ++i) {
+        Bullet* bullet = new Bullet();
+        bullets.push_back(bullet);
+    }
+}
+
 int main()
 {
     TextureHolder textureHolder;
@@ -106,6 +120,9 @@ int main()
 
     std::vector<Zombie*> zombies;
     CreateZobies(zombies, 1000, arena);
+
+    std::vector<Bullet*> bullets;
+    CreateBullets(bullets, 1000);
 
     bool flag = false;
 
@@ -135,11 +152,17 @@ int main()
 
         InputManager::Update(dt.asSeconds());
 
+        if (Mouse::isButtonPressed(Mouse::Button::Left)) {
+            bullets[0]->Spawn(player.GetPosition(), resolution, 50);
+        }
+
         player.Update(dt.asSeconds());
 
         for (auto zombie : zombies) {
             zombie->Update(dt.asSeconds(), player.GetPosition());
         }
+
+        bullets[0]->Update(dt.asSeconds());
 
         mainView.setCenter(player.GetPosition());
 
@@ -150,6 +173,8 @@ int main()
         for (auto zombie : zombies) {
             window.draw(zombie->Getsprite());
         }
+
+        window.draw(bullets[0]->GetShape());
 
         window.draw(player.GetSprite());
         window.display();

@@ -4,7 +4,7 @@
 #include "../utils/TextureHolder.h"
 
 Player::Player()
-	:speed(START_SPEED), accel(0), health(START_HEALTH), maxHealth(START_HEALTH),
+	:speed(START_SPEED), health(START_HEALTH), maxHealth(START_HEALTH),
 	arena(), resolution(), tileSize(0.f), immuneMs(START_IMMUNE_MS), textureFilename("graphics/player.png")
 {
 	sprite.setTexture(TextureHolder::getTexture(textureFilename));

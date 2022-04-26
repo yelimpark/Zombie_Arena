@@ -53,3 +53,33 @@ int utils::RandomRange(int min, int max)
 {
 	return gen() % (max - min) + min;
 }
+
+void utils::NomalizeVector(Vector2f& vector)
+{
+	float length = sqrt(vector.x * vector.x + vector.y * vector.y);
+	if (length > 0) {
+		vector /= length;
+	}
+}
+
+bool utils::IsPointInArea(const Vector2f& point, float left, float top, float width, float height)
+{
+	FloatRect area;
+	area.left = left;
+	area.top = top;
+	area.width = width;
+	area.height = height;
+
+	return area.contains(point);
+}
+
+bool utils::IsRectInArea(const FloatRect& rect, float left, float top, float width, float height)
+{
+	FloatRect area;
+	area.left = left;
+	area.top = top;
+	area.width = width;
+	area.height = height;
+
+	return area.intersects(rect);
+}

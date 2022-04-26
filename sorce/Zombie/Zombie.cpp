@@ -63,17 +63,13 @@ void Zombie::Update(float dt, Vector2f playerPosition)
 {
 	// 숙제
 	Vector2f direction;
-	direction.x = position.x - playerPosition.x;
-	direction.y = position.y - playerPosition.y;
+	direction.x = playerPosition.x - position.x;
+	direction.y = playerPosition.y - position.y;
 
-	float length = sqrt(direction.x * direction.x + direction.y * direction.y);
-
-	if (length != 0) {
-		direction /= length;
-	}
+	utils::NomalizeVector(direction);
 
 	// 이동
-	position += direction * -speed * dt;
+	position += direction * speed * dt;
 
 	if (position.x > 1920 - 100) {
 		position.x = 1920 - 100;
@@ -92,7 +88,7 @@ void Zombie::Update(float dt, Vector2f playerPosition)
 	sprite.setPosition(position);
 
 	// 회전
-	float radian = atan2(-direction.y, -direction.x);
+	float radian = atan2(direction.y, direction.x);
 	float dgree = radian * 180.f / 3.141592f;
 
 	sprite.setRotation(dgree);
