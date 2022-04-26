@@ -19,6 +19,12 @@
     <Filter Include="소스 파일\utils">
       <UniqueIdentifier>{aab8495f-b8d7-4823-a831-af4e3e1b47e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Zombie">
+      <UniqueIdentifier>{3f614ecb-0887-42e2-bd3f-145497c151c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Bullet">
+      <UniqueIdentifier>{1999dd17-b645-4be2-8986-e2cda033e1e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sorce\zomdie.cpp">
@@ -36,6 +42,9 @@
     <ClCompile Include="sorce\utils\TextureHolder.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sorce\Zombie\Zombie.cpp">
+      <Filter>소스 파일\Zombie</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sorce\Player\Player.h">
@@ -49,6 +58,12 @@
     </ClInclude>
     <ClInclude Include="sorce\utils\TextureHolder.h">
       <Filter>소스 파일\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Zombie\Zombie.h">
+      <Filter>소스 파일\Zombie</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Bullet\Bullet.h">
+      <Filter>소스 파일\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

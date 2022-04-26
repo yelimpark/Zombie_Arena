@@ -7,6 +7,8 @@ list<Keyboard::Key> InputManager::downKeys;
 list<Keyboard::Key> InputManager::ingKeys;
 list<Keyboard::Key> InputManager::upKeys;
 
+bool InputManager::isMousePressed = false;
+
 void InputManager::Init()
 {
     mapAxis.clear();
@@ -107,6 +109,13 @@ void InputManager::ProcessInput(const Event& event)
         ingKeys.remove(event.key.code);
         upKeys.push_back(event.key.code);
         break;
+
+    case Event::MouseButtonPressed:
+        isMousePressed = true;
+
+    case Event::MouseButtonReleased:
+        isMousePressed = false;
+
     default:
         break;
     }
@@ -161,6 +170,11 @@ void InputManager::ClearInput()
 {
     downKeys.clear();
     upKeys.clear();
+}
+
+bool InputManager::GetMouseClick()
+{
+    return isMousePressed;
 }
 
 Vector2i InputManager::GetMousePosition()

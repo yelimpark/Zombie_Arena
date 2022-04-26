@@ -81,6 +81,20 @@ void Player::Update(float dt)
 	// 이동
 	position += direction * speed * dt;
 
+	if (position.x > resolution.x - 100) {
+		position.x = resolution.x - 100;
+	}
+	if (position.x < 50) {
+		position.x = 50;
+	}
+
+	if (position.y > resolution.y - 100) {
+		position.y = resolution.y - 100;
+	}
+	if (position.y < 50) {
+		position.y = 50;
+	}
+
 	sprite.setPosition(position);
 
 	// 회전

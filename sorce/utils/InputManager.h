@@ -30,6 +30,8 @@ private:
 	static list<Keyboard::Key> ingKeys;
 	static list<Keyboard::Key> upKeys;
 
+	static bool isMousePressed;
+
 public:
 	static void Init();
 
@@ -48,6 +50,8 @@ public:
 	static bool GetKeyUp(Keyboard::Key key);
 
 	static void ClearInput();
+
+	static bool GetMouseClick();
 
 	static Vector2i GetMousePosition();
 };

@@ -23,13 +23,16 @@
     <ClCompile Include="sorce\utils\InputManager.cpp" />
     <ClCompile Include="sorce\utils\TextureHolder.cpp" />
     <ClCompile Include="sorce\utils\utils.cpp" />
+    <ClCompile Include="sorce\Zombie\Zombie.cpp" />
     <ClCompile Include="sorce\zomdie.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="sorce\Bullet\Bullet.h" />
     <ClInclude Include="sorce\Player\Player.h" />
     <ClInclude Include="sorce\utils\InputManager.h" />
     <ClInclude Include="sorce\utils\TextureHolder.h" />
     <ClInclude Include="sorce\utils\utils.h" />
+    <ClInclude Include="sorce\Zombie\Zombie.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

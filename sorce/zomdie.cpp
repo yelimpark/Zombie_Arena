@@ -3,6 +3,7 @@
 #include "./utils/utils.h"
 #include "./Player/Player.h"
 #include "./utils/TextureHolder.h"
+#include "./Zombie/Zombie.h"
 #include <iostream>
 #include <random>
 
@@ -36,6 +37,7 @@ void CreateBackground(VertexArray& va, IntRect arena) {
             va[vertexIdx + 3].position = Vector2f(x, y + TILE_SIZE);
 
             float texIdx = 0;
+
             if (c == 0 || r == 0 || c == cols - 1 || r == rows - 1) {
                 texIdx = 3;
             }
@@ -52,6 +54,33 @@ void CreateBackground(VertexArray& va, IntRect arena) {
 
         }
     }
+}
+
+void CreateZobies(std::vector<Zombie*>& zombies, int count, IntRect arena) {
+    for (auto v : zombies) {
+        delete v;
+    }
+
+    zombies.clear();
+
+    int offset = 25;
+    int minX = arena.left + offset;
+    int maxX = arena.width - offset;
+    int minY = arena.top + offset;
+    int maxY = arena.height - offset;
+
+    for (int i = 0; i < count; ++i) {
+        int x = utils::RandomRange(minX, maxX + 1);
+        int y = utils::RandomRange(minY, maxY + 1);
+
+        ZombieTypes type = (ZombieTypes)utils::RandomRange(0, (int)ZombieTypes::COUNT);
+
+        Zombie* zombie = new Zombie();
+        zombie->Spawn(x, y, type);
+
+        zombies.push_back(zombie);
+    }
+
 }
 
 int main()
@@ -75,8 +104,12 @@ int main()
     Player player;
     player.Spawn(arena, resolution, 0.f);
 
+    std::vector<Zombie*> zombies;
+    CreateZobies(zombies, 1000, arena);
+
     bool flag = false;
 
+    std::vector<FloatRect> walls;
     VertexArray tileMap;
     CreateBackground(tileMap, arena);
 
@@ -104,11 +137,20 @@ int main()
 
         player.Update(dt.asSeconds());
 
+        for (auto zombie : zombies) {
+            zombie->Update(dt.asSeconds(), player.GetPosition());
+        }
+
         mainView.setCenter(player.GetPosition());
 
         window.clear();
         window.setView(mainView);
         window.draw(tileMap, &texBg);
+
+        for (auto zombie : zombies) {
+            window.draw(zombie->Getsprite());
+        }
+
         window.draw(player.GetSprite());
         window.display();
     }
