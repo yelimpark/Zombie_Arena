@@ -1,6 +1,7 @@
 #include "Bullet.h"
 #include "../utils/InputManager.h"
 #include "../utils/utils.h"
+#include "../Zombie/Zombie.h"
 
 using namespace sf;
 
@@ -30,6 +31,25 @@ void Bullet::Spawn(Vector2f playerPos, Vector2f dir, Vector2i res, int tileSize)
 FloatRect Bullet::GetGlobalBound() const
 {
 	return shape.getGlobalBounds();
+}
+
+bool Bullet::UpdateCollision(const std::vector<Zombie*>& zombies)
+{
+	FloatRect bounds = shape.getGlobalBounds();
+
+	for (auto zombie : zombies) {
+		if (zombie->IsAlive()) {
+			if (bounds.intersects(zombie->GetGlobalBound())) {
+				zombie->OnHitted();
+
+				stop();
+
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 void Bullet::stop()

@@ -1,9 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "../Bullet/Bullet.h"
+#include "./ReloadBar.h"
 #include <list>
 
 using namespace sf;
+
+class Pickup;
 
 class Player
 {
@@ -35,6 +38,8 @@ private:
 	std::list<Bullet*> unuseBullets;
 	std::list<Bullet*> useBullets;
 	float distanceToMuzzle;
+
+	ReloadBar rebar;
 
 public:
 	Player();
@@ -70,5 +75,8 @@ public:
 
 	void UpgradeMaxHealth(int amount);
 
+	bool UpdateCollision(const std::vector<Zombie*>& zombies);
+
+	bool UpdateCollision(const std::list<Pickup*>& items);
 };
 

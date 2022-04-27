@@ -3,6 +3,8 @@
 
 using namespace sf;
 
+class Player;
+
 enum class ZombieTypes{
 	BLOATER,
 	CHASER,
@@ -41,6 +43,8 @@ public:
 
 	void Spawn(float x, float y, ZombieTypes type);
 	void Update(float dt, Vector2f playerPosition);
+
+	bool UpdateCollision(Player& player, Time time);
 
 	FloatRect GetGlobalBound();
 	Sprite Getsprite();

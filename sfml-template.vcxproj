@@ -20,7 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sorce\Bullet\Bullet.cpp" />
+    <ClCompile Include="sorce\Pickup\Pickup.cpp" />
     <ClCompile Include="sorce\Player\Player.cpp" />
+    <ClCompile Include="sorce\Player\ReloadBar.cpp" />
     <ClCompile Include="sorce\utils\InputManager.cpp" />
     <ClCompile Include="sorce\utils\TextureHolder.cpp" />
     <ClCompile Include="sorce\utils\utils.cpp" />
@@ -29,7 +31,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sorce\Bullet\Bullet.h" />
+    <ClInclude Include="sorce\Pickup\Pickup.h" />
     <ClInclude Include="sorce\Player\Player.h" />
+    <ClInclude Include="sorce\Player\ReloadBar.h" />
     <ClInclude Include="sorce\utils\InputManager.h" />
     <ClInclude Include="sorce\utils\TextureHolder.h" />
     <ClInclude Include="sorce\utils\utils.h" />

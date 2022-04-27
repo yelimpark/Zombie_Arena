@@ -25,6 +25,9 @@
     <Filter Include="소스 파일\Bullet">
       <UniqueIdentifier>{1999dd17-b645-4be2-8986-e2cda033e1e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\PickUp">
+      <UniqueIdentifier>{af357c0a-2a5f-4b69-bb6a-6ff1e5aac851}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sorce\zomdie.cpp">
@@ -48,6 +51,12 @@
     <ClCompile Include="sorce\Bullet\Bullet.cpp">
       <Filter>소스 파일\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="sorce\Pickup\Pickup.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\Player\ReloadBar.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sorce\Player\Player.h">
@@ -67,6 +76,12 @@
     </ClInclude>
     <ClInclude Include="sorce\Bullet\Bullet.h">
       <Filter>소스 파일\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Pickup\Pickup.h">
+      <Filter>소스 파일\PickUp</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Player\ReloadBar.h">
+      <Filter>소스 파일\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

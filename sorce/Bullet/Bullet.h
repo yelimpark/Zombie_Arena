@@ -3,6 +3,9 @@
 
 using namespace sf;
 
+// ref 일때 전방선언으로 해결
+class Zombie;
+
 class Bullet {
 private:
 	const float fireLate = 10;
@@ -29,11 +32,7 @@ public:
 
 	FloatRect GetGlobalBound() const;
 
-//	Vector2f GetPosition() const;
-
-//	void SetDirection(Vector2f dir);
-
-// void SetActive(bool active);
+	bool UpdateCollision(const std::vector<Zombie*>& zombies);
 
 	void stop();
 

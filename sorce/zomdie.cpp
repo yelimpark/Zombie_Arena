@@ -5,6 +5,8 @@
 #include "./utils/TextureHolder.h"
 #include "./Zombie/Zombie.h"
 #include "./Bullet/Bullet.h"
+#include "./Pickup/Pickup.h"
+
 #include <iostream>
 #include <random>
 
@@ -106,6 +108,13 @@ int main()
 
     RenderWindow window(VideoMode(resolution.x, resolution.y), "Zombie Arena!", Style::Default);
 
+    window.setMouseCursorVisible(false);
+
+    Sprite spriteCrosshair;
+    Texture textureCrosshair = TextureHolder::getTexture("graphics/crosshair.png");
+    spriteCrosshair.setTexture(textureCrosshair);
+    utils::SetOrigin(spriteCrosshair, Pivots::Center);
+
     View mainView(FloatRect(0, 0, resolution.x, resolution.y));
 
     InputManager::Init();
@@ -114,11 +123,17 @@ int main()
     arena.width = resolution.x;
     arena.height = resolution.y;
 
+    Pickup ammoPickup(PickupTypes::Ammo);
+    ammoPickup.Spawn(true);
+
+    std::list<Pickup*> items;
+    items.push_back(&ammoPickup);
+
     Player player;
     player.Spawn(arena, resolution, 0.f);
 
     std::vector<Zombie*> zombies;
-    CreateZobies(zombies, 1000, arena);
+    CreateZobies(zombies, 5, arena);
 
     std::vector<Bullet*> bullets;
     CreateBullets(bullets, 1000);
@@ -130,12 +145,14 @@ int main()
     CreateBackground(tileMap, arena);
 
     Clock clock;
+    Time playTime;
 
     Texture& texBg = TextureHolder::getTexture("graphics/background_sheet.png");
 
     while (window.isOpen())
     {
         Time dt = clock.restart();
+        playTime += dt;
 
         Event event;
 
@@ -149,7 +166,7 @@ int main()
             InputManager::ProcessInput(event);
         }
 
-        InputManager::Update(dt.asSeconds());
+        InputManager::Update(dt.asSeconds(), window, mainView);
 
         player.Update(dt.asSeconds());
 
@@ -157,11 +174,30 @@ int main()
             zombie->Update(dt.asSeconds(), player.GetPosition());
         }
 
+        ammoPickup.Update(dt.asSeconds());
+
+        player.UpdateCollision(zombies);
+        for (auto zombie : zombies) {
+            if (zombie->UpdateCollision(player, playTime)) {
+                break;
+            }
+        }
+        player.UpdateCollision(items);
+
         mainView.setCenter(player.GetPosition());
+
+        spriteCrosshair.setPosition(InputManager::GetMouseWorldPosition());
 
         window.clear();
         window.setView(mainView);
+
+        // ui
+
         window.draw(tileMap, &texBg);
+
+        if (ammoPickup.IsSpawned()) {
+            window.draw(ammoPickup.GetSprite());
+        }
 
         for (auto zombie : zombies) {
             window.draw(zombie->Getsprite());
@@ -170,6 +206,8 @@ int main()
         window.draw(player.GetSprite());
 
         player.Draw(window);
+
+        window.draw(spriteCrosshair);
 
         window.display();
     }

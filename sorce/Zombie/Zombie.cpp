@@ -1,11 +1,14 @@
 #include "Zombie.h"
 #include "../utils/TextureHolder.h"
 #include "../utils/utils.h"
+#include "../Player/Player.h"
+#include <iostream>
 
 std::vector<ZombieInfo> Zombie::zombieInfo;
 bool Zombie::isInitzombieInfo = false;
 
 Zombie::Zombie()
+	:alive(false)
 {
 	if (!isInitzombieInfo) {
 		zombieInfo.resize((int)ZombieTypes::COUNT);
@@ -37,6 +40,8 @@ Zombie::Zombie()
 
 bool Zombie::OnHitted()
 {
+	sprite.setTexture(TextureHolder::getTexture("graphics/blood.png"));
+	alive = false;
 	return false;
 }
 
@@ -47,6 +52,7 @@ bool Zombie::IsAlive()
 
 void Zombie::Spawn(float x, float y, ZombieTypes type)
 {
+	alive = true;
 	auto& info = zombieInfo[(int)type];
 	sprite.setTexture(TextureHolder::getTexture(info.textureFilename));
 	speed = info.speed;
@@ -61,7 +67,8 @@ void Zombie::Spawn(float x, float y, ZombieTypes type)
 
 void Zombie::Update(float dt, Vector2f playerPosition)
 {
-	// ¼÷Á¦
+	if (!alive) return;
+
 	Vector2f direction(playerPosition - position);
 
 	float length = sqrt(direction.x * direction.x + direction.y * direction.y);
@@ -99,9 +106,18 @@ void Zombie::Update(float dt, Vector2f playerPosition)
 	sprite.setRotation(dgree);
 }
 
+bool Zombie::UpdateCollision(Player& player, Time time)
+{
+	if (sprite.getGlobalBounds().intersects(player.GetGlobalBound())) {
+		player.OnHitted(time);
+		return true;
+	}
+	return false;
+}
+
 FloatRect Zombie::GetGlobalBound()
 {
-	return FloatRect();
+	return sprite.getGlobalBounds();
 }
 
 Sprite Zombie::Getsprite()

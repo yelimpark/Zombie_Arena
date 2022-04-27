@@ -11,7 +11,8 @@ list<Mouse::Button> InputManager::downButtons;
 list<Mouse::Button> InputManager::ingButtons;
 list<Mouse::Button> InputManager::upButtons;
 
-MouseState InputManager::isMousePressed;
+Vector2i InputManager::mousePosition;
+Vector2f InputManager::mousePositionWorld;
 
 void InputManager::Init()
 {
@@ -127,7 +128,7 @@ void InputManager::ProcessInput(const Event& event)
     }
 }
 
-void InputManager::Update(float dt)
+void InputManager::Update(float dt, RenderWindow& window, View& mainview)
 {
     for (auto it = mapAxis.begin(); it != mapAxis.end(); ++it) {
         AxisInfo& ref = it->second;
@@ -152,6 +153,9 @@ void InputManager::Update(float dt)
             ref.value = -1.f;
         }
     }
+
+    mousePosition = Mouse::getPosition();
+    mousePositionWorld = window.mapPixelToCoords(mousePosition, mainview);
 }
 
 bool InputManager::GetKeyDown(Keyboard::Key key)
@@ -188,7 +192,7 @@ bool InputManager::GetMouseButttonDown(Mouse::Button button)
 
 Vector2i InputManager::GetMousePosition()
 {
-    return Mouse::getPosition();
+    return mousePosition;
 }
 
 bool InputManager::GetMouseButton(Mouse::Button button)
@@ -201,4 +205,9 @@ bool InputManager::GetMouseButtonUp(Mouse::Button button)
 {
     auto it = find(upButtons.begin(), upButtons.end(), button);
     return it != upButtons.end();
+}
+
+Vector2f InputManager::GetMouseWorldPosition()
+{
+    return mousePositionWorld;
 }

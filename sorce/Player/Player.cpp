@@ -2,6 +2,7 @@
 #include "../utils/utils.h"
 #include "../utils/InputManager.h"
 #include "../utils/TextureHolder.h"
+#include "../Pickup/Pickup.h"
 #include <iostream>
 #include <algorithm>
 
@@ -9,7 +10,8 @@ using namespace sf;
 
 Player::Player()
 	:speed(START_SPEED), health(START_HEALTH), maxHealth(START_HEALTH),
-	arena(), resolution(), tileSize(0.f), immuneMs(START_IMMUNE_MS), textureFilename("graphics/player.png"), distanceToMuzzle(45.0f)
+	arena(), resolution(), tileSize(0.f), immuneMs(START_IMMUNE_MS), textureFilename("graphics/player.png"),
+	distanceToMuzzle(45.0f)
 {
 	sprite.setTexture(TextureHolder::getTexture(textureFilename));
 	
@@ -62,7 +64,7 @@ void Player::Spawn(IntRect arena, Vector2i res, int tileSize)
 
 bool Player::OnHitted(Time timeHit)
 {
-	if (lastHit.asMilliseconds() - timeHit.asMilliseconds() > immuneMs) {
+	if (timeHit.asMilliseconds() - lastHit.asMilliseconds() > immuneMs) {
 		lastHit = timeHit;
 		health -= 10;
 		return true;
@@ -145,8 +147,9 @@ void Player::Update(float dt)
 	float dgree = radian * 180.f / 3.141592f;
 
 	sprite.setRotation(dgree);
+	rebar.Update(position, dt);
 
-	if (InputManager::GetMouseButton(Mouse::Button::Left)) {
+	if (InputManager::GetMouseButttonDown(Mouse::Button::Left) && rebar.Shoot()) {
 		Shoot(Vector2f(mouseDir.x, mouseDir.y));
 	}
 
@@ -157,6 +160,7 @@ void Player::Update(float dt)
 
 		if (!bullet->IsActive()) {
 			it = useBullets.erase(it);
+			unuseBullets.push_back(bullet);
 		}
 		else {
 			it++;
@@ -170,6 +174,7 @@ void Player::Draw(RenderWindow& window)
 	for (auto bullet : useBullets) {
 		window.draw(bullet->GetShape());
 	}
+	window.draw(rebar.GetShape());
 }
 
 void Player::UpgradeSpeed()
@@ -191,4 +196,30 @@ void Player::GetHealthItem(int amount)
 void Player::UpgradeMaxHealth(int amount)
 {
 	maxHealth += START_HEALTH * 0.2;
+}
+
+bool Player::UpdateCollision(const std::vector<Zombie*>& zombies)
+{
+	bool isCollied = false;
+
+	for (auto bullet : useBullets) {
+		if (bullet->UpdateCollision(zombies)) {
+			isCollied = true;
+		}
+	}
+	return isCollied;
+}
+
+bool Player::UpdateCollision(const std::list<Pickup*>& items)
+{
+	FloatRect bounds = sprite.getGlobalBounds();
+	bool isCollied = false;
+
+	for (auto item : items) {
+		if (bounds.intersects(item->GetBlobalBounds())) {
+			item->GotIt();
+			isCollied = true;
+		}
+	}
+	return isCollied;
 }
