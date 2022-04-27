@@ -81,7 +81,6 @@ void CreateZobies(std::vector<Zombie*>& zombies, int count, IntRect arena) {
 
         zombies.push_back(zombie);
     }
-
 }
 
 void CreateBullets(std::vector<Bullet*>& bullets, int count) {
@@ -174,7 +173,9 @@ int main()
             window.draw(zombie->Getsprite());
         }
 
-        window.draw(bullets[0]->GetShape());
+        if (bullets[0]->IsActive()) {
+            window.draw(bullets[0]->GetShape());
+        }
 
         window.draw(player.GetSprite());
         window.display();

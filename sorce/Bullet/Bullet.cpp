@@ -20,7 +20,7 @@ void Bullet::Spawn(Vector2f playerPos, Vector2i res, int tileSize)
 	resolution = res;
 	this->tileSize = tileSize;
 
-	position.x = playerPos.x;
+	position.x = playerPos.x + 5;
 	position.y = playerPos.y;
 	isAvtive = true;
 
@@ -34,6 +34,11 @@ void Bullet::Spawn(Vector2f playerPos, Vector2i res, int tileSize)
 FloatRect Bullet::GetGlobalBound() const
 {
 	return shape.getGlobalBounds();
+}
+
+bool Bullet::IsActive()
+{
+	return isAvtive;
 }
 
 const RectangleShape& Bullet::GetShape() const

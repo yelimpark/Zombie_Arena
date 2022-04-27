@@ -100,8 +100,8 @@ void Player::Update(float dt)
 	// È¸Àü
 	Vector2i mousePos = InputManager::GetMousePosition();
 	Vector2i mouseDir;
-	mouseDir.x = mousePos.x - resolution.x * 0,5;
-	mouseDir.y = mousePos.y - resolution.y * 0,5;
+	mouseDir.x = mousePos.x - resolution.x * 0.5f;
+	mouseDir.y = mousePos.y - resolution.y * 0.5f;
 
 	float radian = atan2(mouseDir.y, mouseDir.x);
 	float dgree = radian * 180.f / 3.141592f;

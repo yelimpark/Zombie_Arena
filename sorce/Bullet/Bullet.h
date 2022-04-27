@@ -31,6 +31,10 @@ public:
 
 //	void SetDirection(Vector2f dir);
 
+// void SetActive(bool active);
+
+	bool IsActive();
+
 	const RectangleShape& GetShape() const;
 
 	void Update(float dt);
