@@ -2,14 +2,52 @@
 #include "../utils/utils.h"
 #include "../utils/InputManager.h"
 #include "../utils/TextureHolder.h"
+#include <iostream>
+#include <algorithm>
+
+using namespace sf;
 
 Player::Player()
 	:speed(START_SPEED), health(START_HEALTH), maxHealth(START_HEALTH),
-	arena(), resolution(), tileSize(0.f), immuneMs(START_IMMUNE_MS), textureFilename("graphics/player.png")
+	arena(), resolution(), tileSize(0.f), immuneMs(START_IMMUNE_MS), textureFilename("graphics/player.png"), distanceToMuzzle(45.0f)
 {
 	sprite.setTexture(TextureHolder::getTexture(textureFilename));
 	
 	utils::SetOrigin(sprite, Pivots::Center);
+
+	for (int i = 0; i < BULLET_CACHE_SIZE; ++i) {
+		unuseBullets.push_back(new Bullet());
+	}
+}
+
+Player::~Player()
+{
+	for (auto bullet : unuseBullets) {
+		delete bullet;
+	}
+	unuseBullets.clear();
+	for (auto bullet : useBullets) {
+		delete bullet;
+	}
+	useBullets.clear();
+
+}
+
+void Player::Shoot(Vector2f dir)
+{
+	dir  = utils::NomalizeVector(dir);
+	Vector2f spawnPos = position + dir * distanceToMuzzle;
+
+	if (unuseBullets.empty()) {
+		for (int i = 0; i < BULLET_CACHE_SIZE; ++i) {
+			unuseBullets.push_back(new Bullet());
+		}
+	}
+
+	Bullet* bullet = unuseBullets.front();
+	unuseBullets.pop_front();
+	useBullets.push_back(bullet);
+	bullet->Spawn(spawnPos, dir, resolution, tileSize);
 }
 
 void Player::Spawn(IntRect arena, Vector2i res, int tileSize)
@@ -107,6 +145,31 @@ void Player::Update(float dt)
 	float dgree = radian * 180.f / 3.141592f;
 
 	sprite.setRotation(dgree);
+
+	if (InputManager::GetMouseButton(Mouse::Button::Left)) {
+		Shoot(Vector2f(mouseDir.x, mouseDir.y));
+	}
+
+	auto it = useBullets.begin();
+	while (it != useBullets.end()) {
+		Bullet* bullet = *it;
+		bullet->Update(dt);
+
+		if (!bullet->IsActive()) {
+			it = useBullets.erase(it);
+		}
+		else {
+			it++;
+		}
+	}
+}
+
+void Player::Draw(RenderWindow& window)
+{
+	window.draw(sprite);
+	for (auto bullet : useBullets) {
+		window.draw(bullet->GetShape());
+	}
 }
 
 void Player::UpgradeSpeed()

@@ -22,6 +22,12 @@ struct AxisInfo
 	float value; // -1.0 ~ 1.0
 };
 
+enum class MouseState {
+	Down,
+	Pressed,
+	Up
+};
+
 class InputManager {
 private:
 	static std::map<Axis, AxisInfo> mapAxis;
@@ -30,7 +36,11 @@ private:
 	static list<Keyboard::Key> ingKeys;
 	static list<Keyboard::Key> upKeys;
 
-	static bool isMousePressed;
+	static list<Mouse::Button> downButtons;
+	static list<Mouse::Button> ingButtons;
+	static list<Mouse::Button> upButtons;
+
+	static MouseState isMousePressed;
 
 public:
 	static void Init();
@@ -51,7 +61,11 @@ public:
 
 	static void ClearInput();
 
-	static bool GetMouseClick();
+	static bool GetMouseButttonDown(Mouse::Button button);
+
+	static bool GetMouseButton(Mouse::Button button);
+
+	static bool GetMouseButtonUp(Mouse::Button button);
 
 	static Vector2i GetMousePosition();
 };

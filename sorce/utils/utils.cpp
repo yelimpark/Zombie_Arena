@@ -54,12 +54,15 @@ int utils::RandomRange(int min, int max)
 	return gen() % (max - min) + min;
 }
 
-void utils::NomalizeVector(Vector2f& vector)
+Vector2f utils::NomalizeVector(Vector2f vector)
 {
-	float length = sqrt(vector.x * vector.x + vector.y * vector.y);
+	float length = GetLength(vector);
+
 	if (length > 0) {
 		vector /= length;
 	}
+
+	return vector;
 }
 
 bool utils::IsPointInArea(const Vector2f& point, float left, float top, float width, float height)
@@ -82,4 +85,16 @@ bool utils::IsRectInArea(const FloatRect& rect, float left, float top, float wid
 	area.height = height;
 
 	return area.intersects(rect);
+}
+
+float utils::GetLength(const Vector2f& vector)
+{
+	return sqrt(vector.x * vector.x + vector.y * vector.y);
+}
+
+float utils::GetAngle(const Vector2f& from, const Vector2f& to)
+{
+	Vector2f dir = to - from;
+	float radian = atan2(dir.y, dir.x);
+	return radian * 180.f / 3.141592f;
 }

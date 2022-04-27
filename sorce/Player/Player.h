@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "../Bullet/Bullet.h"
+#include <list>
 
 using namespace sf;
 
@@ -29,8 +31,16 @@ private:
 
 	Time lastHit;
 
+	const int BULLET_CACHE_SIZE = 1000;
+	std::list<Bullet*> unuseBullets;
+	std::list<Bullet*> useBullets;
+	float distanceToMuzzle;
+
 public:
 	Player();
+	~Player();
+
+	void Shoot(Vector2f dir);
 
 	void Spawn(IntRect arena, Vector2i res, int tileSize);
 
@@ -51,6 +61,8 @@ public:
 	void SetDirection(Vector2f dir);
 
 	void Update(float dt);
+
+	void Draw(RenderWindow& window);
 
 	void UpgradeSpeed();
 

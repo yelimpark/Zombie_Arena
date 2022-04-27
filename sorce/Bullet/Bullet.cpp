@@ -2,38 +2,39 @@
 #include "../utils/InputManager.h"
 #include "../utils/utils.h"
 
+using namespace sf;
+
 Bullet::Bullet()
-	:tileSize(0.f), isAvtive(false)
+	:tileSize(0.f), isAvtive(false), distance(0)
 {
 	position.x = -100;
 	position.y = -100;
 
-	shape.setSize(Vector2f(10, 10));
+	shape.setSize(Vector2f(100, 10));
 	shape.setPosition(position);
 	shape.setFillColor(Color::Red);
 
 	utils::SetOrigin(shape, Pivots::Center);
 }
 
-void Bullet::Spawn(Vector2f playerPos, Vector2i res, int tileSize)
+void Bullet::Spawn(Vector2f playerPos, Vector2f dir, Vector2i res, int tileSize)
 {
-	resolution = res;
-	this->tileSize = tileSize;
-
-	position.x = playerPos.x + 5;
-	position.y = playerPos.y;
 	isAvtive = true;
-
-	Vector2i mousePos = InputManager::GetMousePosition();
-	direction.x = mousePos.x - position.x;
-	direction.y = mousePos.y - position.y;
-
-	utils::NomalizeVector(direction);
+	position = playerPos;
+	shape.setPosition(position);
+	direction = utils::NomalizeVector(dir);
+	float dgree = utils::GetAngle(position, position + direction);
+	shape.setRotation(dgree);
 }
 
 FloatRect Bullet::GetGlobalBound() const
 {
 	return shape.getGlobalBounds();
+}
+
+void Bullet::stop()
+{
+	isAvtive = false;
 }
 
 bool Bullet::IsActive()
@@ -48,15 +49,13 @@ const RectangleShape& Bullet::GetShape() const
 
 void Bullet::Update(float dt)
 {
-	if (!isAvtive) return;
-
 	position += direction * speed * dt;
 	shape.setPosition(position);
 
-	if (!utils::IsRectInArea(this->GetGlobalBound(),
-		tileSize, tileSize, resolution.x - tileSize * 2, resolution.y - tileSize * 2))
-	{
-		isAvtive = false;
+	distance += speed * dt;
+
+	if (distance > DEFAULT_DISTANCE) {
+		stop();
 	}
 }
 

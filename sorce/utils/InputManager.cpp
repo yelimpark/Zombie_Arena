@@ -7,7 +7,11 @@ list<Keyboard::Key> InputManager::downKeys;
 list<Keyboard::Key> InputManager::ingKeys;
 list<Keyboard::Key> InputManager::upKeys;
 
-bool InputManager::isMousePressed = false;
+list<Mouse::Button> InputManager::downButtons;
+list<Mouse::Button> InputManager::ingButtons;
+list<Mouse::Button> InputManager::upButtons;
+
+MouseState InputManager::isMousePressed;
 
 void InputManager::Init()
 {
@@ -100,7 +104,8 @@ void InputManager::ProcessInput(const Event& event)
     switch (event.type)
     {
     case Event::KeyPressed:
-        if (!GetKey(event.key.code)) {
+        if (!GetKey(event.key.code))
+        {
             downKeys.push_back(event.key.code);
             ingKeys.push_back(event.key.code);
         }
@@ -109,13 +114,14 @@ void InputManager::ProcessInput(const Event& event)
         ingKeys.remove(event.key.code);
         upKeys.push_back(event.key.code);
         break;
-
     case Event::MouseButtonPressed:
-        isMousePressed = true;
-
+        downButtons.push_back(event.mouseButton.button);
+        ingButtons.push_back(event.mouseButton.button);
+        break;
     case Event::MouseButtonReleased:
-        isMousePressed = false;
-
+        ingButtons.remove(event.mouseButton.button);
+        upButtons.push_back(event.mouseButton.button);
+        break;
     default:
         break;
     }
@@ -170,14 +176,29 @@ void InputManager::ClearInput()
 {
     downKeys.clear();
     upKeys.clear();
+    downButtons.clear();
+    upButtons.clear();
 }
 
-bool InputManager::GetMouseClick()
+bool InputManager::GetMouseButttonDown(Mouse::Button button)
 {
-    return isMousePressed;
+    auto it = find(downButtons.begin(), downButtons.end(), button);
+    return it != downButtons.end();
 }
 
 Vector2i InputManager::GetMousePosition()
 {
     return Mouse::getPosition();
+}
+
+bool InputManager::GetMouseButton(Mouse::Button button)
+{
+    auto it = find(ingButtons.begin(), ingButtons.end(), button);
+    return it != ingButtons.end();
+}
+
+bool InputManager::GetMouseButtonUp(Mouse::Button button)
+{
+    auto it = find(upButtons.begin(), upButtons.end(), button);
+    return it != upButtons.end();
 }

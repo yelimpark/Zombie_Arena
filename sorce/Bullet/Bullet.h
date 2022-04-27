@@ -7,6 +7,7 @@ class Bullet {
 private:
 	const float fireLate = 10;
 	const float speed = 1000;
+	const float DEFAULT_DISTANCE = 2500.f;
 
 	Time fireTime;
 
@@ -19,11 +20,12 @@ private:
 	Vector2f direction;
 
 	bool isAvtive;
+	float distance;
 
 public:
 	Bullet();
 
-	void Spawn(Vector2f playerPos, Vector2i res, int tileSize);
+	void Spawn(Vector2f playerPos, Vector2f dir, Vector2i res, int tileSize);
 
 	FloatRect GetGlobalBound() const;
 
@@ -32,6 +34,8 @@ public:
 //	void SetDirection(Vector2f dir);
 
 // void SetActive(bool active);
+
+	void stop();
 
 	bool IsActive();
 
