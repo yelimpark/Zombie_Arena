@@ -20,6 +20,12 @@ struct ZombieInfo {
 
 };
 
+enum class zombieStatus {
+	ALIVE,
+	DEAD,
+	INACTIVE
+};
+
 class Zombie {
 private:
 	ZombieTypes zombieTypes;
@@ -30,7 +36,9 @@ private:
 	float speed;
 	int health;
 
-	bool alive;
+	zombieStatus status;
+	const float SHOW_DEAD_ZOMBIE = 5.f;
+	float timeAfterDeath;
 
 	static std::vector<ZombieInfo> zombieInfo;
 	static bool isInitzombieInfo;
@@ -48,4 +56,6 @@ public:
 
 	FloatRect GetGlobalBound();
 	Sprite Getsprite();
+
+	void Draw(RenderWindow& window);
 };

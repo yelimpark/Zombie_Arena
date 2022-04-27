@@ -200,7 +200,7 @@ int main()
         }
 
         for (auto zombie : zombies) {
-            window.draw(zombie->Getsprite());
+            zombie->Draw(window);
         }
 
         window.draw(player.GetSprite());
