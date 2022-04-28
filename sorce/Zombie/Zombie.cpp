@@ -96,20 +96,6 @@ void Zombie::Update(float dt, Vector2f playerPosition)
 		position += direction * speed * dt;
 	}
 
-	if (position.x > 1920 - 100) {
-		position.x = 1920 - 100;
-	}
-	if (position.x < 50) {
-		position.x = 50;
-	}
-
-	if (position.y > 1080 - 100) {
-		position.y = 1080 - 100;
-	}
-	if (position.y < 50) {
-		position.y = 50;
-	}
-
 	sprite.setPosition(position);
 
 	// È¸Àü
@@ -137,13 +123,17 @@ Sprite Zombie::Getsprite()
 	return sprite;
 }
 
-void Zombie::Draw(RenderWindow& window)
+void Zombie::Draw(RenderWindow& window, IntRect& arena)
 {
+	FloatRect fArena;
 	switch (status)
 	{
 	case zombieStatus::ALIVE:
 	case zombieStatus::DEAD:
-		window.draw(sprite);
+		fArena.width = arena.width;
+		fArena.height = arena.height;
+		if (sprite.getGlobalBounds().intersects(fArena))
+			window.draw(sprite);
 		break;
 	default:
 		break;

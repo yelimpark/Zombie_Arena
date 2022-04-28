@@ -1,11 +1,20 @@
 #include "ReloadBar.h"
 #include "../utils/utils.h"
+#include "../utils/GameVal.h"
 
 ReloadBar::ReloadBar()
-	:timeLeftToReload(RELOAD_TIME), leftBullet(MAGAZINE)
+	:megazine(GameVal::megazine), timeLeftToReload(RELOAD_TIME), leftBullet(megazine)
 {
 	timebar.setSize(Vector2f(0, 0));
 	timebar.setFillColor(Color::Red);
+}
+
+void ReloadBar::Init()
+{
+	megazine = GameVal::megazine;
+	timeLeftToReload = RELOAD_TIME;
+	leftBullet = megazine;
+	timebar.setSize(Vector2f(0, 0));
 }
 
 void ReloadBar::Update(Vector2f playerPos, float dt)
@@ -24,7 +33,7 @@ void ReloadBar::Reload(float dt)
 
 	if (timeLeftToReload < 0) {
 		timeLeftToReload = RELOAD_TIME;
-		leftBullet = MAGAZINE;
+		leftBullet = megazine;
 	}
 }
 

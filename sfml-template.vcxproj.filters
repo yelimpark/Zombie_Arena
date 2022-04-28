@@ -28,11 +28,20 @@
     <Filter Include="소스 파일\PickUp">
       <UniqueIdentifier>{af357c0a-2a5f-4b69-bb6a-6ff1e5aac851}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Scene">
+      <UniqueIdentifier>{027d42c5-6eb0-4f33-91ec-0bd340a3fa43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Framework">
+      <UniqueIdentifier>{33a083a4-283c-4557-9375-5af8b444134c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\CrossCursor">
+      <UniqueIdentifier>{919e5b0d-ca25-4bb4-a17d-aa4e9d614715}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\UI">
+      <UniqueIdentifier>{43886bab-efb6-4e56-b4e7-cc9881c453a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sorce\zomdie.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="sorce\Player\Player.cpp">
       <Filter>소스 파일\Player</Filter>
     </ClCompile>
@@ -42,20 +51,56 @@
     <ClCompile Include="sorce\utils\InputManager.cpp">
       <Filter>소스 파일\utils</Filter>
     </ClCompile>
-    <ClCompile Include="sorce\utils\TextureHolder.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="sorce\Zombie\Zombie.cpp">
       <Filter>소스 파일\Zombie</Filter>
     </ClCompile>
     <ClCompile Include="sorce\Bullet\Bullet.cpp">
       <Filter>소스 파일\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="sorce\utils\GameVal.cpp">
+      <Filter>소스 파일\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\utils\SceneManager.cpp">
+      <Filter>소스 파일\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\utils\TextureHolder.cpp">
+      <Filter>소스 파일\utils</Filter>
+    </ClCompile>
     <ClCompile Include="sorce\Pickup\Pickup.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\PickUp</Filter>
     </ClCompile>
     <ClCompile Include="sorce\Player\ReloadBar.cpp">
+      <Filter>소스 파일\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\Zombie_Arena.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\Scene\Scene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\Scene\TitleScene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\Scene\StageScene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\Framework\Framework.cpp">
+      <Filter>소스 파일\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\CrossCursor\CrossCursor.cpp">
+      <Filter>소스 파일\CrossCursor</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\Scene\LevelUpScene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\utils\FontHolder.cpp">
+      <Filter>소스 파일\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\UI\UIManager.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\UI\HealthBar.cpp">
+      <Filter>소스 파일\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +127,39 @@
     </ClInclude>
     <ClInclude Include="sorce\Player\ReloadBar.h">
       <Filter>소스 파일\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\utils\SceneManager.h">
+      <Filter>소스 파일\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Scene\Scene.h">
+      <Filter>소스 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\utils\GameVal.h">
+      <Filter>소스 파일\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Scene\TitleScene.h">
+      <Filter>소스 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Scene\StageScene.h">
+      <Filter>소스 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Framework\Framework.h">
+      <Filter>소스 파일\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\CrossCursor\CrossCursor.h">
+      <Filter>소스 파일\CrossCursor</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\utils\FontHolder.h">
+      <Filter>소스 파일\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\UI\UIManager.h">
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\UI\HealthBar.h">
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Scene\LevelUpScene.h">
+      <Filter>소스 파일\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
