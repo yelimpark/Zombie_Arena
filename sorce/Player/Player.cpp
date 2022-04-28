@@ -60,6 +60,11 @@ void Player::Spawn(IntRect arena, Vector2i res, int tileSize)
 
 	position.x = this->arena.width * 0.5f;
 	position.y = this->arena.height * 0.5f;
+
+	health = START_HEALTH;
+	speed = START_SPEED;
+	maxHealth = START_HEALTH;
+	immuneMs = START_IMMUNE_MS;
 }
 
 bool Player::OnHitted(Time timeHit)
@@ -121,18 +126,19 @@ void Player::Update(float dt)
 	// ÀÌµ¿
 	position += direction * speed * dt;
 
-	if (position.x > resolution.x - 100) {
-		position.x = resolution.x - 100;
+
+	if (position.x > arena.left + arena.width - tileSize) {
+		position.x = arena.left + arena.width - tileSize;
 	}
-	if (position.x < 50) {
-		position.x = 50;
+	if (position.x < tileSize) {
+		position.x = tileSize;
 	}
 
-	if (position.y > resolution.y - 100) {
-		position.y = resolution.y - 100;
+	if (position.y > arena.top + arena.height - tileSize) {
+		position.y = arena.top + arena.height - tileSize;
 	}
-	if (position.y < 50) {
-		position.y = 50;
+	if (position.y < tileSize) {
+		position.y = tileSize;
 	}
 
 	sprite.setPosition(position);
@@ -219,6 +225,7 @@ bool Player::UpdateCollision(const std::list<Pickup*>& items)
 		if (bounds.intersects(item->GetBlobalBounds())) {
 			item->GotIt();
 			isCollied = true;
+
 		}
 	}
 	return isCollied;

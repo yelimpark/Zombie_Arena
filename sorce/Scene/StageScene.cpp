@@ -13,7 +13,7 @@
 using namespace sf;
 
 StageScene::StageScene(SceneManager& sceneManager)
-	:Scene(sceneManager), zombieCount(100), pause(true), score(0),
+	:Scene(sceneManager), zombieCount(10), pause(true), score(0),
     resolution(Framework::GetResolution()),
     window(Framework::Getwindow()),
     mainView(Framework::GetView())
@@ -26,7 +26,10 @@ bool StageScene::Init()
     arena.width = 1200.f;
     arena.height = 1200.f;
 
-    player.Spawn(arena, resolution, 0.f);
+    zombieCount = 10;
+    score = 0;
+
+    player.Spawn(arena, resolution, 50.f);
     CreateBackground();
     CreateZobies();
     CreateBullets();
@@ -34,6 +37,10 @@ bool StageScene::Init()
     Pickup* ammoPickup = new Pickup(PickupTypes::Ammo);
     ammoPickup->Spawn(true);
     items.push_back(ammoPickup);
+
+    Pickup* healthPickup = new Pickup(PickupTypes::Health);
+    healthPickup->Spawn(true);
+    items.push_back(healthPickup);
 
     pause = false;
 
@@ -56,7 +63,8 @@ void StageScene::Update(Time& dt)
     }
 
     if (InputManager::GetKeyDown(Keyboard::Enter) ||
-        player.GetHealth() < 0) 
+        player.GetHealth() < 0 ||
+        zombieCount <= 0)
     {
         pause = true;
     }
@@ -73,11 +81,12 @@ void StageScene::Update(Time& dt)
         item->Update(dt.asSeconds());
     }
 
-    player.UpdateCollision(zombies);
+    if (player.UpdateCollision(zombies)) {
+        --zombieCount;
+        ++score;
+    }
     for (auto zombie : zombies) {
         if (zombie->UpdateCollision(player, playTime)) {
-            --zombieCount;
-            ++score;
             break;
         }
     }
@@ -204,13 +213,19 @@ void StageScene::Release()
         delete item;
     }
 
+    items.clear();
+
     for (auto v : zombies) {
         delete v;
     }
 
+    zombies.clear();
+
     for (auto v : bullets) {
         delete v;
     }
+
+    bullets.clear();
 }
 
 StageScene::~StageScene()

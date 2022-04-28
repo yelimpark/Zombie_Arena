@@ -1,8 +1,9 @@
 #include "ReloadBar.h"
 #include "../utils/utils.h"
+#include "../utils/GameVal.h"
 
 ReloadBar::ReloadBar()
-	:timeLeftToReload(RELOAD_TIME), leftBullet(MAGAZINE)
+	:MAGAZINE(GameVal::MAGAZINE), timeLeftToReload(RELOAD_TIME), leftBullet(MAGAZINE)
 {
 	timebar.setSize(Vector2f(0, 0));
 	timebar.setFillColor(Color::Red);

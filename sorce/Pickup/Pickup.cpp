@@ -14,7 +14,7 @@ Pickup::Pickup(PickupTypes type) : type(type)
 		break;
 
 	case PickupTypes::Health:
-		textureId = "graphics/ammo_pickup.png";
+		textureId = "graphics/health_pickup.png";
 		value = HEALTH_START_VALUE;
 		break;
 	default:

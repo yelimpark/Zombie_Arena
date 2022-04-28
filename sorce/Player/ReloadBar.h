@@ -8,7 +8,7 @@ private:
 	const float RELOAD_TIME = 3.f;
 	RectangleShape timebar;
 	float timeLeftToReload;
-	const int MAGAZINE = 5;
+	int MAGAZINE;
 	int leftBullet;
 
 public:
