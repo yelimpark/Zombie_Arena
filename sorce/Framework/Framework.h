@@ -1,5 +1,6 @@
 #pragma once
 #include "../utils/TextureHolder.h"
+#include "../utils/FontHolder.h"
 #include "../utils/utils.h"
 #include "../utils/InputManager.h"
 #include "../utils/SceneManager.h"
@@ -14,6 +15,7 @@ private:
     static View mainView;
 
     TextureHolder textureHolder;
+    FontHolder fontHolder;
     SceneManager sMgr;
 
     CrossCursor crossCursor;

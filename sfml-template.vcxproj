@@ -28,6 +28,7 @@
     <ClCompile Include="sorce\Scene\Scene.cpp" />
     <ClCompile Include="sorce\Scene\StageScene.cpp" />
     <ClCompile Include="sorce\Scene\TitleScene.cpp" />
+    <ClCompile Include="sorce\utils\FontHolder.cpp" />
     <ClCompile Include="sorce\utils\GameVal.cpp" />
     <ClCompile Include="sorce\utils\InputManager.cpp" />
     <ClCompile Include="sorce\utils\SceneManager.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="sorce\Scene\Scene.h" />
     <ClInclude Include="sorce\Scene\StageScene.h" />
     <ClInclude Include="sorce\Scene\TitleScene.h" />
+    <ClInclude Include="sorce\utils\FontHolder.h" />
     <ClInclude Include="sorce\utils\GameVal.h" />
     <ClInclude Include="sorce\utils\InputManager.h" />
     <ClInclude Include="sorce\utils\SceneManager.h" />

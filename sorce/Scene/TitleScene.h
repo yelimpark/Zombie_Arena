@@ -5,11 +5,9 @@
 class TitleScene : public Scene {
 private:
 	Sprite bg;
-
-	Font font;
-
 	Text text;
 
+	const Vector2i& resolution;
 	RenderWindow& window;
 
 public:

@@ -15,7 +15,6 @@ SceneManager::SceneManager()
 void SceneManager::Init()
 {
 	scenes[(int)SceneType::TITLE] = new TitleScene(*this);
-
 	scenes[(int)SceneType::STAGE] = new StageScene(*this);
 
 	scenes[(int)currScene]->Init();

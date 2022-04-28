@@ -2,7 +2,7 @@
 #include "../utils/SceneManager.h"
 
 class Scene {
-private:
+protected:
 	SceneManager& sceneManager;
 
 public:

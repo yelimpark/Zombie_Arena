@@ -11,7 +11,7 @@ Bullet::Bullet()
 	position.x = -100;
 	position.y = -100;
 
-	shape.setSize(Vector2f(100, 10));
+	shape.setSize(Vector2f(50, 5));
 	shape.setPosition(position);
 	shape.setFillColor(Color::Red);
 

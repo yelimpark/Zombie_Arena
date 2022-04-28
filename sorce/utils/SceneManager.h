@@ -6,9 +6,8 @@ class Scene;
 
 enum class SceneType {
 	TITLE,
-	LEVELUP,
 	STAGE,
-	GAMEOVER,
+	LEVELUP,
 	COUNT
 };
 
