@@ -54,6 +54,11 @@ int utils::RandomRange(int min, int max)
 	return gen() % (max - min) + min;
 }
 
+bool utils::RandomBool()
+{
+	return (gen() % 2 == 1)? true : false;
+}
+
 Vector2f utils::NomalizeVector(Vector2f vector)
 {
 	float length = GetLength(vector);

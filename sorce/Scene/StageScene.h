@@ -17,8 +17,7 @@ private:
 	VertexArray tileMap;
 
 	int zombieCount;
-
-	Texture texBg;
+	int score;
 	
 	const Vector2i& resolution;
 	RenderWindow& window;
@@ -28,10 +27,10 @@ private:
 
 	Time playTime;
 
+	bool pause;
+
 	void CreateZobies();
-
 	void CreateBullets();
-
 	void CreateBackground();
 
 public:

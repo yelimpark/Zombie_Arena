@@ -13,7 +13,7 @@ class Player
 private:
 	const float START_SPEED = 1000;
 	const float START_HEALTH = 100;
-	const float START_IMMUNE_MS = 200;
+	const float START_IMMUNE_MS = 1000;
 
 	Vector2f position;
 
