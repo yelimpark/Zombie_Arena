@@ -35,8 +35,6 @@ bool StageScene::Init()
     CreateZobies();
     CreateBullets();
 
-    healthBar.Init(resolution, player.GetHealth());
-
     Pickup* ammoPickup = new Pickup(PickupTypes::Ammo);
     ammoPickup->Spawn(true);
     items.push_back(ammoPickup);
@@ -66,7 +64,7 @@ void StageScene::Update(Time& dt)
     }
 
     if (InputManager::GetKeyDown(Keyboard::Enter) ||
-        player.GetHealth() < 0 ||
+        player.GetHealth() <= 0 ||
         zombieCount <= 0)
     {
         pause = true;
@@ -95,7 +93,9 @@ void StageScene::Update(Time& dt)
     }
 
     player.UpdateCollision(items);
-    ui.Update(score, zombieCount, resolution);
+
+    ui.Update(score, zombieCount, rebar.GetLeftBullet(), resolution);
+    healthBar.Init(resolution, player.GetHealth());
     mainView.setCenter(player.GetPosition());
 }
 

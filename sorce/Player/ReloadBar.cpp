@@ -52,3 +52,8 @@ RectangleShape& ReloadBar::GetShape()
 {
 	return timebar;
 }
+
+int ReloadBar::GetLeftBullet()
+{
+	return leftBullet;
+}

@@ -4,7 +4,7 @@
 #include "../player/Player.h"
 
 UIManager::UIManager()
-	: curBullets(START_COUNT_OF_BULLETS), wave(START_WAVE), score(0)
+	: wave(START_WAVE), score(0)
 {
 	font.loadFromFile("fonts/zombiecontrol.ttf");
 	textScore.setFont(font);
@@ -34,7 +34,7 @@ UIManager::UIManager()
 	texture.loadFromFile("graphics/ammo_icon.png");
 }
 
-void UIManager::Update(int score, int numOfZombies, Vector2i position)
+void UIManager::Update(int score, int numOfZombies, int bullets, Vector2i position)
 {
 
 	//--------------Á¡¼ö--------------
@@ -65,7 +65,7 @@ void UIManager::Update(int score, int numOfZombies, Vector2i position)
 	sprite.setPosition(position.x * 0.18f, position.y * 0.8f);
 
 	stringstream bs;
-	bs << curBullets << "/" << START_COUNT_OF_BULLETS;
+	bs << bullets << "/" << START_COUNT_OF_BULLETS;
 	textBullet.setString(bs.str());
 	textBullet.setPosition(position.x * 0.22f, position.y * 0.8f);
 

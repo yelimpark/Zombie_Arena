@@ -4,6 +4,7 @@
 #include <list>
 #include "../UI/HealthBar.h"
 #include "../UI/UIManager.h"
+#include "../Player/ReloadBar.h"
 
 class Pickup;
 class Zombie;
@@ -16,6 +17,8 @@ private:
 	HealthBar healthBar;
 
 	UIManager ui;
+
+	ReloadBar rebar;
 
 	std::list<Pickup*> items;
 	std::vector<Zombie*> zombies;

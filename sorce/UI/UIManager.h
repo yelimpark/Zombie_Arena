@@ -27,10 +27,9 @@ private:
 	int highScore;
 	int wave;
 
-	int curBullets;
 public:
 	UIManager();
-	void Update(int score, int numOfZombies, Vector2i position);
+	void Update(int score, int numOfZombies, int bullets, Vector2i position);
 	void Draw(RenderWindow& window);
 };
 
