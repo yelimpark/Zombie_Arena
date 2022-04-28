@@ -1,18 +1,19 @@
 #pragma once
 #include "Scene.h"
+#include "../utils/SceneManager.h"
 #include <SFML/Graphics.hpp>
 
-class TitleScene : public Scene {
+class LevelUpScene : public Scene {
 private:
 	Sprite bg;
-	Text text;
+	Text textLevel;
 
 	const Vector2i& resolution;
 	RenderWindow& window;
 	View& mainView;
 
 public:
-	TitleScene(SceneManager& sceneManager);
+	LevelUpScene(SceneManager& sceneManager);
 
 	virtual bool Init();
 
@@ -22,5 +23,6 @@ public:
 
 	virtual void Release();
 
-	virtual ~TitleScene();
+	virtual ~LevelUpScene();
 };
+

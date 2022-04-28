@@ -57,5 +57,5 @@ public:
 	FloatRect GetGlobalBound();
 	Sprite Getsprite();
 
-	void Draw(RenderWindow& window);
+	void Draw(RenderWindow& window, IntRect& arena);
 };

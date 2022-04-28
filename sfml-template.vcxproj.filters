@@ -90,8 +90,11 @@
     <ClCompile Include="sorce\CrossCursor\CrossCursor.cpp">
       <Filter>소스 파일\CrossCursor</Filter>
     </ClCompile>
+    <ClCompile Include="sorce\Scene\LevelUpScene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="sorce\utils\FontHolder.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\utils</Filter>
     </ClCompile>
     <ClCompile Include="sorce\UI\UIManager.cpp">
       <Filter>소스 파일\UI</Filter>
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="sorce\UI\HealthBar.h">
       <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Scene\LevelUpScene.h">
+      <Filter>소스 파일\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
