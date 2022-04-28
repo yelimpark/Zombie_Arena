@@ -6,6 +6,7 @@ Framework* Framework::FrameInstance = 0;
 Vector2i Framework::resolution(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height);
 RenderWindow Framework::window(VideoMode(resolution.x, resolution.y), "Zombie Arena!", Style::Default);
 View Framework::mainView(FloatRect(0, 0, resolution.x, resolution.y));
+View Framework::uiView(FloatRect(0, 0, resolution.x, resolution.y));
 
 Framework::Framework()
 {
@@ -26,6 +27,12 @@ const Vector2i& Framework::GetResolution()
 View& Framework::GetView()
 {
     return mainView;
+}
+
+View& Framework::GetUIView()
+{
+    uiView.setCenter(Vector2f(resolution.x * 0.5f, resolution.y * 0.5f));
+    return uiView;
 }
 
 void Framework::Init()

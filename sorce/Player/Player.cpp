@@ -170,7 +170,7 @@ void Player::Update(float dt)
 			unuseBullets.push_back(bullet);
 		}
 		else {
-			it++;
+			++it;
 		}
 	}
 }
