@@ -29,6 +29,8 @@ public :
 
 	static void SetOrigin(Shape& shape, Pivots preset);
 
+	static void SetOrigin(Text& text, Pivots preset);
+
 	static void SetOrigin(Transformable& tr, FloatRect bounds, Pivots preset);
 
 	static int RandomRange(int min, int max);

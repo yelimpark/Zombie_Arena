@@ -46,6 +46,8 @@ bool StageScene::Init()
         item->Spawn(true);
     }
 
+    healthBar.Init(player.GetHealth(), resolution);
+
     pause = false;
 
 	return true;
@@ -94,14 +96,16 @@ void StageScene::Update(Time& dt)
     }
     for (auto zombie : zombies) {
         if (zombie->UpdateCollision(player, playTime)) {
+            healthBar.Update(resolution, player.GetHealth());
             break;
         }
     }
 
-    player.UpdateCollision(items);
+    if (player.UpdateCollision(items)) {
+        healthBar.Update(resolution, player.GetHealth());
+    }
 
     ui.Update(score, zombieCount, player.GetLeftBullets(), resolution);
-    healthBar.Init(resolution, player.GetHealth());
     mainView.setCenter(player.GetPosition());
 }
 

@@ -9,11 +9,17 @@ HealthBar::HealthBar()
 	gameoverText.setFont(FontHolder::getfont("fonts/zombiecontrol.ttf"));
 	gameoverText.setFillColor(Color::White);
 	gameoverText.setCharacterSize(50);
-	gameoverText.setPosition(650, 550);
 	gameoverText.setString("Press Enter To Continue");
+	utils::SetOrigin(gameoverText, Pivots::Center);
 }
 
-void HealthBar::Init(Vector2i position, int health)
+void HealthBar::Init(int health, Vector2i res)
+{
+	gameoverText.setPosition(res.x * 0.5, res.y * 0.5);
+	this->health = health;
+}
+
+void HealthBar::Update(Vector2i position, int health)
 {
 	this->health = health;
 	float healthBarWidth = health * 3;
@@ -21,12 +27,8 @@ void HealthBar::Init(Vector2i position, int health)
 
 	Vector2f healthBarSize = Vector2f(healthBarWidth, healthBarHeight);
 	rectShape.setSize(healthBarSize);
-	//FloatRect textRect = rectShape.getLocalBounds();
-	//rectShape.setOrigin(
-	//	textRect.left, textRect.top + textRect.height * 0.5f);
 	rectShape.setPosition(position.x * 0.35f, position.y * 0.8f);
 	rectShape.setFillColor(Color::Red);
-
 }
 
 void HealthBar::Draw(RenderWindow& window)
@@ -36,5 +38,4 @@ void HealthBar::Draw(RenderWindow& window)
 	if (health <= 0) {
 		window.draw(gameoverText);
 	}
-
 }

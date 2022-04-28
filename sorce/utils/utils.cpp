@@ -13,6 +13,12 @@ void utils::SetOrigin(Shape& shape, Pivots preset)
 	SetOrigin(shape, shape.getLocalBounds(), preset);
 }
 
+void utils::SetOrigin(Text& text, Pivots preset)
+{
+	SetOrigin(text, text.getLocalBounds(), preset);
+}
+
+
 void utils::SetOrigin(Transformable& tr, FloatRect bounds, Pivots preset)
 {
 	switch (preset)
