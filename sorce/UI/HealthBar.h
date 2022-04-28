@@ -10,6 +10,8 @@ private:
 	RectangleShape rectShape;
 	Vector2f healthBarSize;
 
+	Text gameoverText;
+
 	int health;
 	int healthMax;
 

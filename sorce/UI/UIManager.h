@@ -4,8 +4,6 @@
 using namespace sf;
 using namespace std;
 
-class Player;
-
 class UIManager
 {
 private:
