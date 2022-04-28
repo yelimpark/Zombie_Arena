@@ -9,8 +9,7 @@ CrossCursor::CrossCursor()
 void CrossCursor::Init()
 {
     window.setMouseCursorVisible(false);
-    Texture textureCrosshair = TextureHolder::getTexture("graphics/crosshair.png");
-    sprite.setTexture(textureCrosshair);
+    sprite.setTexture(TextureHolder::getTexture("graphics/crosshair.png"));
     utils::SetOrigin(sprite, Pivots::Center);
 }
 

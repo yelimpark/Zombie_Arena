@@ -55,6 +55,7 @@ int Framework::Run()
 
         InputManager::Update(dt.asSeconds(), window, mainView);
         sMgr.Update(dt);
+        crossCursor.Update();
 
         window.clear();
         window.setView(mainView);

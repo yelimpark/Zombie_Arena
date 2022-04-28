@@ -20,7 +20,7 @@ void TitleScene::Update(Time& dt)
 
 void TitleScene::Render()
 {
-	Framework::Getwindow().draw(bg);
+	window.draw(bg);
 }
 
 void TitleScene::Release()
