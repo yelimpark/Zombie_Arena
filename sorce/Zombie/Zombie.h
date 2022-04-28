@@ -20,12 +20,6 @@ struct ZombieInfo {
 
 };
 
-enum class zombieStatus {
-	ALIVE,
-	DEAD,
-	INACTIVE
-};
-
 class Zombie {
 private:
 	ZombieTypes zombieTypes;
@@ -36,7 +30,7 @@ private:
 	float speed;
 	int health;
 
-	zombieStatus status;
+	bool isAlive;
 	const float SHOW_DEAD_ZOMBIE = 5.f;
 	float timeAfterDeath;
 

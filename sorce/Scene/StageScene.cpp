@@ -52,8 +52,8 @@ bool StageScene::Init()
 void StageScene::Update(Time& dt)
 {
     if (pause) {
-        if (player.GetHealth() < 0 && InputManager::GetKeyDown(Keyboard::Enter)) {
-            GameVal::wave = 1;
+        if (player.GetHealth() <= 0 && InputManager::GetKeyDown(Keyboard::Enter)) {
+            GameVal::Init();
             sceneManager.ChangeScene(SceneType::TITLE);
         }
 
@@ -65,10 +65,13 @@ void StageScene::Update(Time& dt)
     }
 
     if (InputManager::GetKeyDown(Keyboard::Enter) ||
-        player.GetHealth() < 0 ||
-        zombieCount <= 0)
+        player.GetHealth() <= 0)
     {
         pause = true;
+    }
+
+    if (zombieCount <= 0) {
+        sceneManager.ChangeScene(SceneType::LEVELUP);
     }
 
     playTime += dt;

@@ -10,4 +10,6 @@ public :
 	static int megazine;
 
 	// 그외 강화 트리 정보
+
+	static void Init();
 };

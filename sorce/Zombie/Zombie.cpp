@@ -8,7 +8,7 @@ std::vector<ZombieInfo> Zombie::zombieInfo;
 bool Zombie::isInitzombieInfo = false;
 
 Zombie::Zombie()
-	:status(zombieStatus::INACTIVE), timeAfterDeath(SHOW_DEAD_ZOMBIE)
+	:isAlive(false), timeAfterDeath(SHOW_DEAD_ZOMBIE)
 {
 	if (!isInitzombieInfo) {
 		zombieInfo.resize((int)ZombieTypes::COUNT);
@@ -41,18 +41,18 @@ Zombie::Zombie()
 bool Zombie::OnHitted()
 {
 	sprite.setTexture(TextureHolder::getTexture("graphics/blood.png"));
-	status = zombieStatus::DEAD;
+	isAlive = false;
 	return false;
 }
 
 bool Zombie::IsAlive()
 {
-	return zombieStatus::ALIVE == status;
+	return isAlive;
 }
 
 void Zombie::Spawn(float x, float y, ZombieTypes type)
 {
-	status = zombieStatus::ALIVE;
+	isAlive = true;
 	auto& info = zombieInfo[(int)type];
 	sprite.setTexture(TextureHolder::getTexture(info.textureFilename));
 	speed = info.speed;
@@ -67,18 +67,9 @@ void Zombie::Spawn(float x, float y, ZombieTypes type)
 
 void Zombie::Update(float dt, Vector2f playerPosition)
 {
-	switch (status)
-	{
-	case zombieStatus::DEAD:
+	if (!isAlive) {
 		timeAfterDeath -= dt;
-		if (timeAfterDeath < 0) {
-			status = zombieStatus::INACTIVE;
-		}
 		return;
-	case zombieStatus::INACTIVE:
-		return;
-	default:
-		break;
 	}
 
 	Vector2f direction(playerPosition - position);
@@ -126,16 +117,8 @@ Sprite Zombie::Getsprite()
 void Zombie::Draw(RenderWindow& window, IntRect& arena)
 {
 	FloatRect fArena;
-	switch (status)
-	{
-	case zombieStatus::ALIVE:
-	case zombieStatus::DEAD:
-		fArena.width = arena.width;
-		fArena.height = arena.height;
-		if (sprite.getGlobalBounds().intersects(fArena))
-			window.draw(sprite);
-		break;
-	default:
-		break;
-	}
+	fArena.width = arena.width;
+	fArena.height = arena.height;
+	if (sprite.getGlobalBounds().intersects(fArena))
+		window.draw(sprite);
 }

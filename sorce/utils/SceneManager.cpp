@@ -15,6 +15,8 @@ SceneManager::SceneManager()
 
 void SceneManager::Init()
 {
+	GameVal::Init();
+
 	scenes[(int)SceneType::TITLE] = new TitleScene(*this);
 	scenes[(int)SceneType::LEVELUP] = new LevelUpScene(*this);
 	scenes[(int)SceneType::STAGE] = new StageScene(*this);
