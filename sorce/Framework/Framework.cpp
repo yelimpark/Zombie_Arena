@@ -31,7 +31,6 @@ View& Framework::GetView()
 
 View& Framework::GetUIView()
 {
-    uiView.setCenter(Vector2f(resolution.x * 0.5f, resolution.y * 0.5f));
     return uiView;
 }
 
@@ -40,6 +39,7 @@ void Framework::Init()
     InputManager::Init();
     sMgr.Init();
     crossCursor.Init();
+    uiView.setCenter(Vector2f(resolution.x * 0.5f, resolution.y * 0.5f));
 }
 
 int Framework::Run()
@@ -60,7 +60,7 @@ int Framework::Run()
             InputManager::ProcessInput(event);
         }
 
-        InputManager::Update(dt.asSeconds(), window, mainView);
+        InputManager::Update(dt.asSeconds(), window, uiView);
         sMgr.Update(dt);
         crossCursor.Update();
 
