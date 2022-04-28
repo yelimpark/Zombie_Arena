@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "../Scene/StageScene.h"
 #include "../Scene/TitleScene.h"
+#include "../Scene/LevelUpScene.h"
 #include <assert.h>
 
 SceneManager* SceneManager::MgrInstance;
@@ -15,6 +16,7 @@ SceneManager::SceneManager()
 void SceneManager::Init()
 {
 	scenes[(int)SceneType::TITLE] = new TitleScene(*this);
+	scenes[(int)SceneType::LEVELUP] = new LevelUpScene(*this);
 	scenes[(int)SceneType::STAGE] = new StageScene(*this);
 
 	scenes[(int)currScene]->Init();
@@ -22,9 +24,9 @@ void SceneManager::Init()
 
 void SceneManager::Release()
 {
-	// 씬  다 구현한 후엔 반복문으로 수정
-	delete scenes[(int)SceneType::TITLE];
-	delete scenes[(int)SceneType::STAGE];
+	for (int i = 0; i < (int)SceneType::COUNT; i++) {
+		delete scenes[i];
+	}
 }
 
 void SceneManager::Update(Time& dt)

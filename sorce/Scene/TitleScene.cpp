@@ -7,7 +7,8 @@
 TitleScene::TitleScene(SceneManager& sceneManager)
 	:Scene(sceneManager),
 	resolution(Framework::GetResolution()),
-	window(Framework::Getwindow())
+	window(Framework::Getwindow()),
+	mainView(Framework::GetView())
 {
 }
 
@@ -19,13 +20,16 @@ bool TitleScene::Init()
 	text.setPosition(resolution.x * 0.1f, resolution.y * 0.7f);
 	text.setCharacterSize(100);
 	text.setFillColor(Color::White);
+
+	mainView.setCenter(resolution.x * 0.5f, resolution.y * 0.5f);
+
 	return true;
 }
 
 void TitleScene::Update(Time& dt)
 {
 	if (InputManager::GetKeyDown(Keyboard::Enter)) {
-		sceneManager.ChangeScene(SceneType::STAGE);
+		sceneManager.ChangeScene(SceneType::LEVELUP);
 	}
 }
 

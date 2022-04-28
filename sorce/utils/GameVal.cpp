@@ -2,4 +2,4 @@
 
 int GameVal::wave = 1;
 int GameVal::score = 0;
-int GameVal::MAGAZINE = 24;
+int GameVal::megazine = 5;

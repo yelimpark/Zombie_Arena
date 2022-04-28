@@ -65,6 +65,7 @@ void Player::Spawn(IntRect arena, Vector2i res, int tileSize)
 	speed = START_SPEED;
 	maxHealth = START_HEALTH;
 	immuneMs = START_IMMUNE_MS;
+	rebar.Init();
 }
 
 bool Player::OnHitted(Time timeHit)

@@ -87,8 +87,11 @@
     <ClCompile Include="sorce\CrossCursor\CrossCursor.cpp">
       <Filter>소스 파일\CrossCursor</Filter>
     </ClCompile>
+    <ClCompile Include="sorce\Scene\LevelUpScene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="sorce\utils\FontHolder.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="sorce\utils\FontHolder.h">
       <Filter>소스 파일\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Scene\LevelUpScene.h">
+      <Filter>소스 파일\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -52,7 +52,7 @@ void StageScene::Update(Time& dt)
     if (pause) {
         if (player.GetHealth() < 0 && InputManager::GetKeyDown(Keyboard::Enter)) {
             GameVal::wave = 1;
-            Init();
+            sceneManager.ChangeScene(SceneType::TITLE);
         }
 
         if (InputManager::GetKeyDown(Keyboard::Enter)) {
