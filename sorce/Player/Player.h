@@ -78,5 +78,7 @@ public:
 	bool UpdateCollision(const std::vector<Zombie*>& zombies);
 
 	bool UpdateCollision(const std::list<Pickup*>& items);
+	
+	int GetLeftBullets();
 };
 

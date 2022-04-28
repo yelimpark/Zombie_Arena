@@ -18,8 +18,6 @@ private:
 
 	UIManager ui;
 
-	ReloadBar rebar;
-
 	std::list<Pickup*> items;
 	std::vector<Zombie*> zombies;
 	std::vector<Bullet*> bullets;

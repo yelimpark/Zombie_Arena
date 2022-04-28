@@ -94,7 +94,7 @@ void StageScene::Update(Time& dt)
 
     player.UpdateCollision(items);
 
-    ui.Update(score, zombieCount, rebar.GetLeftBullet(), resolution);
+    ui.Update(score, zombieCount, player.GetLeftBullets(), resolution);
     healthBar.Init(resolution, player.GetHealth());
     mainView.setCenter(player.GetPosition());
 }
