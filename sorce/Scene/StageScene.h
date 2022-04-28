@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "../Player/Player.h"
 #include <list>
+#include "../UI/HealthBar.h"
 
 class Pickup;
 class Zombie;
@@ -10,6 +11,8 @@ class Bullet;
 class StageScene : public Scene {
 private:
 	Player player;
+
+	HealthBar healthBar;
 
 	std::list<Pickup*> items;
 	std::vector<Zombie*> zombies;
