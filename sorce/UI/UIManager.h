@@ -18,7 +18,6 @@ private:
 	Text textHighScore;
 	Text zombieCount;
 	Text waveNum;
-	RectangleShape rectShape;
 	Texture texture;
 	Sprite sprite;
 
@@ -30,7 +29,7 @@ private:
 	int curBullets;
 public:
 	UI();
-	void Update(int score, int health, int numOfZombies, Vector2f position);
+	void Update(int score, int numOfZombies, Vector2f position);
 	void Draw(RenderWindow& window);
 };
 

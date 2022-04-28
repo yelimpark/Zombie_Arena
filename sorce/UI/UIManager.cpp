@@ -34,7 +34,7 @@ UI::UI()
 	texture.loadFromFile("graphics/ammo_icon.png");
 }
 
-void UI::Update(int score, int health, int numOfZombies, Vector2f position)
+void UI::Update(int score, int numOfZombies, Vector2f position)
 {
 
 	//--------------점수--------------
@@ -68,16 +68,6 @@ void UI::Update(int score, int health, int numOfZombies, Vector2f position)
 	bs << curBullets << "/" << START_COUNT_OF_BULLETS;
 	textBullet.setString(bs.str());
 	textBullet.setPosition(position.x * 0.22f, position.y * 0.8f);
-
-
-	//-------------체력바-------------
-	float healthBarWidth = 200;
-	float healthBarHeight = 30;
-	Vector2f healthBarSize = Vector2f(healthBarWidth, healthBarHeight);
-	rectShape.setSize(healthBarSize);
-	Vector2f healthBarPos = Vector2f(position.x * 0.5f - healthBarWidth * 0.5f, position.y * 0.8f);
-	rectShape.setPosition(healthBarPos);
-	rectShape.setFillColor(Color::Red);
 }
 
 void UI::Draw(RenderWindow& window)
@@ -88,5 +78,4 @@ void UI::Draw(RenderWindow& window)
 	window.draw(waveNum);
 	window.draw(sprite);
 	window.draw(textBullet);
-	window.draw(rectShape);
 }

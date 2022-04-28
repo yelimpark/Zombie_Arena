@@ -31,6 +31,8 @@ bool StageScene::Init()
     CreateZobies();
     CreateBullets();
 
+    healthBar.Init(Vector2f(resolution.x, resolution.y));
+
     Pickup* ammoPickup = new Pickup(PickupTypes::Ammo);
     ammoPickup->Spawn(true);
     items.push_back(ammoPickup);
@@ -62,6 +64,7 @@ void StageScene::Update(Time& dt)
     }
 
     player.UpdateCollision(items);
+    healthBar.Update(player.GetHealth());
 
     mainView.setCenter(player.GetPosition());
 }
@@ -81,6 +84,7 @@ void StageScene::Render()
     }
 
     player.Draw(window);
+    healthBar.Draw(window);
 }
 
 void StageScene::CreateBackground() {
