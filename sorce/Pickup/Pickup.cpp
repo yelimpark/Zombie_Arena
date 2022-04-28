@@ -39,10 +39,8 @@ void Pickup::Spawn(bool spawn)
 	spawned = spawn;
 	if (spawned) {
 		timer = START_SECOND_FOE_LIVE;
-		//int x = utils::RandomRange(arena.left, arena.left + arena.width);
-		//int y = utils::RandomRange(arena.top, arena.top + arena.height);
-		int x = utils::RandomRange(0, 1920);
-		int y = utils::RandomRange(0, 1080);
+		int x = utils::RandomRange(arena.left, arena.left + arena.width);
+		int y = utils::RandomRange(arena.top, arena.top + arena.height);
 
 		sprite.setPosition(Vector2f(x, y));
 	}
@@ -53,6 +51,7 @@ void Pickup::Spawn(bool spawn)
 
 int Pickup::GotIt()
 {
+	Spawn(false);
 	return value;
 }
 

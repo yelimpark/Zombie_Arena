@@ -37,12 +37,15 @@ bool StageScene::Init()
     healthBar.Init(Vector2f(resolution.x, resolution.y));
 
     Pickup* ammoPickup = new Pickup(PickupTypes::Ammo);
-    ammoPickup->Spawn(true);
     items.push_back(ammoPickup);
 
     Pickup* healthPickup = new Pickup(PickupTypes::Health);
-    healthPickup->Spawn(true);
     items.push_back(healthPickup);
+
+    for (auto item : items) {
+        item->SetArena(arena);
+        item->Spawn(true);
+    }
 
     pause = false;
 
