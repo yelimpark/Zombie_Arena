@@ -5,7 +5,7 @@ using namespace sf;
 
 class Player;
 
-enum class ZombieTypes{
+enum class ZombieTypes {
 	BLOATER,
 	CHASER,
 	CRAWLER,
@@ -20,17 +20,23 @@ struct ZombieInfo {
 
 };
 
+enum class zombieStatus {
+	ALIVE,
+	DEAD,
+	INACTIVE
+};
+
 class Zombie {
 private:
 	ZombieTypes zombieTypes;
-	
+
 	Vector2f position;
 	Sprite sprite;
 
 	float speed;
 	int health;
 
-	bool isAlive;
+	zombieStatus status;
 	const float SHOW_DEAD_ZOMBIE = 5.f;
 	float timeAfterDeath;
 

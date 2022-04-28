@@ -8,7 +8,7 @@ std::vector<ZombieInfo> Zombie::zombieInfo;
 bool Zombie::isInitzombieInfo = false;
 
 Zombie::Zombie()
-	:isAlive(false), timeAfterDeath(SHOW_DEAD_ZOMBIE)
+	:status(zombieStatus::INACTIVE), timeAfterDeath(SHOW_DEAD_ZOMBIE)
 {
 	if (!isInitzombieInfo) {
 		zombieInfo.resize((int)ZombieTypes::COUNT);
@@ -41,18 +41,18 @@ Zombie::Zombie()
 bool Zombie::OnHitted()
 {
 	sprite.setTexture(TextureHolder::getTexture("graphics/blood.png"));
-	isAlive = false;
+	status = zombieStatus::DEAD;
 	return false;
 }
 
 bool Zombie::IsAlive()
 {
-	return isAlive;
+	return zombieStatus::ALIVE == status;
 }
 
 void Zombie::Spawn(float x, float y, ZombieTypes type)
 {
-	isAlive = true;
+	status = zombieStatus::ALIVE;
 	auto& info = zombieInfo[(int)type];
 	sprite.setTexture(TextureHolder::getTexture(info.textureFilename));
 	speed = info.speed;
@@ -67,9 +67,18 @@ void Zombie::Spawn(float x, float y, ZombieTypes type)
 
 void Zombie::Update(float dt, Vector2f playerPosition)
 {
-	if (!isAlive) {
+	switch (status)
+	{
+	case zombieStatus::DEAD:
 		timeAfterDeath -= dt;
+		if (timeAfterDeath < 0) {
+			status = zombieStatus::INACTIVE;
+		}
 		return;
+	case zombieStatus::INACTIVE:
+		return;
+	default:
+		break;
 	}
 
 	Vector2f direction(playerPosition - position);
@@ -89,7 +98,6 @@ void Zombie::Update(float dt, Vector2f playerPosition)
 
 	sprite.setPosition(position);
 
-	// È¸Àü
 	float radian = atan2(direction.y, direction.x);
 	float dgree = radian * 180.f / 3.141592f;
 	sprite.setRotation(dgree);
@@ -97,7 +105,7 @@ void Zombie::Update(float dt, Vector2f playerPosition)
 
 bool Zombie::UpdateCollision(Player& player, Time time)
 {
-	if (sprite.getGlobalBounds().intersects(player.GetGlobalBound())) {
+	if (status == zombieStatus::ALIVE && sprite.getGlobalBounds().intersects(player.GetGlobalBound())) {
 		player.OnHitted(time);
 		return true;
 	}
@@ -117,8 +125,16 @@ Sprite Zombie::Getsprite()
 void Zombie::Draw(RenderWindow& window, IntRect& arena)
 {
 	FloatRect fArena;
-	fArena.width = arena.width;
-	fArena.height = arena.height;
-	if (sprite.getGlobalBounds().intersects(fArena))
-		window.draw(sprite);
+	switch (status)
+	{
+	case zombieStatus::ALIVE:
+	case zombieStatus::DEAD:
+		fArena.width = arena.width;
+		fArena.height = arena.height;
+		if (sprite.getGlobalBounds().intersects(fArena))
+			window.draw(sprite);
+		break;
+	default:
+		break;
+	}
 }
