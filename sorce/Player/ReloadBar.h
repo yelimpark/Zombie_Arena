@@ -20,6 +20,8 @@ public:
 
 	void Reload(float dt);
 
+	int GetLeftBullet();
+
 	bool Shoot();
 
 	RectangleShape& GetShape();

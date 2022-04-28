@@ -170,7 +170,7 @@ void Player::Update(float dt)
 			unuseBullets.push_back(bullet);
 		}
 		else {
-			it++;
+			++it;
 		}
 	}
 }
@@ -244,4 +244,9 @@ bool Player::UpdateCollision(const std::list<Pickup*>& items)
 		}
 	}
 	return isCollied;
+}
+
+int Player::GetLeftBullets()
+{
+	return rebar.GetLeftBullet();
 }

@@ -8,10 +8,10 @@ using namespace sf;
 Bullet::Bullet()
 	:tileSize(0.f), isAvtive(false), distance(0)
 {
-	position.x = -100;
-	position.y = -100;
+	//position.x = -100;
+	//position.y = -100;
 
-	shape.setSize(Vector2f(50, 5));
+	shape.setSize(Vector2f(20, 5));
 	shape.setPosition(position);
 	shape.setFillColor(Color::Red);
 

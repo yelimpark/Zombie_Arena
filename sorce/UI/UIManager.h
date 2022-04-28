@@ -6,7 +6,7 @@ using namespace std;
 
 class Player;
 
-class UI
+class UIManager
 {
 private:
 	const float START_COUNT_OF_BULLETS = 24;
@@ -18,6 +18,7 @@ private:
 	Text textHighScore;
 	Text zombieCount;
 	Text waveNum;
+
 	Texture texture;
 	Sprite sprite;
 
@@ -26,10 +27,9 @@ private:
 	int highScore;
 	int wave;
 
-	int curBullets;
 public:
-	UI();
-	void Update(int score, int numOfZombies, Vector2f position);
+	UIManager();
+	void Update(int score, int numOfZombies, int bullets, Vector2i position);
 	void Draw(RenderWindow& window);
 };
 

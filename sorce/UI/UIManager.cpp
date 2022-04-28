@@ -3,8 +3,8 @@
 #include <sstream>
 #include "../player/Player.h"
 
-UI::UI()
-	: curBullets(START_COUNT_OF_BULLETS), wave(START_WAVE)
+UIManager::UIManager()
+	: wave(START_WAVE), score(0)
 {
 	font.loadFromFile("fonts/zombiecontrol.ttf");
 	textScore.setFont(font);
@@ -34,7 +34,7 @@ UI::UI()
 	texture.loadFromFile("graphics/ammo_icon.png");
 }
 
-void UI::Update(int score, int numOfZombies, Vector2f position)
+void UIManager::Update(int score, int numOfZombies, int bullets, Vector2i position)
 {
 
 	//--------------Á¡¼ö--------------
@@ -65,12 +65,14 @@ void UI::Update(int score, int numOfZombies, Vector2f position)
 	sprite.setPosition(position.x * 0.18f, position.y * 0.8f);
 
 	stringstream bs;
-	bs << curBullets << "/" << START_COUNT_OF_BULLETS;
+	bs << bullets << "/" << START_COUNT_OF_BULLETS;
 	textBullet.setString(bs.str());
 	textBullet.setPosition(position.x * 0.22f, position.y * 0.8f);
+
+
 }
 
-void UI::Draw(RenderWindow& window)
+void UIManager::Draw(RenderWindow& window)
 {
 	window.draw(textScore);
 	window.draw(textHighScore);

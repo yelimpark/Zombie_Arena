@@ -16,7 +16,8 @@ StageScene::StageScene(SceneManager& sceneManager)
 	:Scene(sceneManager), zombieCount(10), pause(true), score(0),
     resolution(Framework::GetResolution()),
     window(Framework::Getwindow()),
-    mainView(Framework::GetView())
+    mainView(Framework::GetView()),
+    uiView(Framework::GetUIView())
 {
 
 }
@@ -33,8 +34,6 @@ bool StageScene::Init()
     CreateBackground();
     CreateZobies();
     CreateBullets();
-
-    healthBar.Init(Vector2f(resolution.x, resolution.y));
 
     Pickup* ammoPickup = new Pickup(PickupTypes::Ammo);
     items.push_back(ammoPickup);
@@ -100,8 +99,9 @@ void StageScene::Update(Time& dt)
     }
 
     player.UpdateCollision(items);
-    healthBar.Update(player.GetHealth());
 
+    ui.Update(score, zombieCount, player.GetLeftBullets(), resolution);
+    healthBar.Init(resolution, player.GetHealth());
     mainView.setCenter(player.GetPosition());
 }
 
@@ -120,6 +120,9 @@ void StageScene::Render()
     }
 
     player.Draw(window);
+
+    window.setView(uiView);
+    ui.Draw(window);
     healthBar.Draw(window);
 }
 

@@ -40,8 +40,13 @@ Zombie::Zombie()
 
 bool Zombie::OnHitted()
 {
-	sprite.setTexture(TextureHolder::getTexture("graphics/blood.png"));
-	status = zombieStatus::DEAD;
+	health--;
+	if (health <= 0)
+	{
+		sprite.setTexture(TextureHolder::getTexture("graphics/blood.png"));
+		status = zombieStatus::DEAD;
+		return true;
+	}
 	return false;
 }
 

@@ -3,6 +3,8 @@
 #include "../Player/Player.h"
 #include <list>
 #include "../UI/HealthBar.h"
+#include "../UI/UIManager.h"
+#include "../Player/ReloadBar.h"
 
 class Pickup;
 class Zombie;
@@ -13,6 +15,8 @@ private:
 	Player player;
 
 	HealthBar healthBar;
+
+	UIManager ui;
 
 	std::list<Pickup*> items;
 	std::vector<Zombie*> zombies;
@@ -25,6 +29,7 @@ private:
 	const Vector2i& resolution;
 	RenderWindow& window;
 	View& mainView;
+	View& uiView;
 
 	IntRect arena;
 
