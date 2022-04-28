@@ -75,6 +75,22 @@ Sprite& Pickup::GetSprite()
 {
 	return sprite;
 }
+//--------------Pickip item Upgrade for LevelUpScene
+void Pickup::AammoUpgrade()
+{
+	if (static_cast<int>(PickupTypes::Ammo) == 1)
+	{
+		value += (AMMO_START_VALUE * 10.f);
+	}
+}
+//--------------Pickip item Upgrade for LevelUpScene
+void Pickup::HealthUpgrade()
+{
+	if (static_cast<int>(PickupTypes::Health) == 1)
+	{
+		value += (HEALTH_START_VALUE * 10.f);
+	}
+}
 
 const FloatRect Pickup::GetBlobalBounds()
 {

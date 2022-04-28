@@ -1,10 +1,9 @@
 #include "LevelUpScene.h"
-
+#include "../Bullet/Bullet.h"
 #include "../utils/TextureHolder.h"
 #include "../utils/InputManager.h"
 #include "../Framework/Framework.h"
 #include"../utils/SceneManager.h"
-
 #include <iostream>
 #include <sstream>
 
@@ -14,8 +13,9 @@ LevelUpScene::LevelUpScene(SceneManager& sceneManager)
 	:Scene(sceneManager),
 	window(Framework::Getwindow()),
 	resolution(Framework::GetResolution()),
-	mainView(Framework::GetView())
+	mainView(Framework::GetView()),spickup(PickupTypes::Ammo())
 {
+
 }
 
 bool LevelUpScene::Init()
@@ -26,18 +26,8 @@ bool LevelUpScene::Init()
 	textLevel.setCharacterSize(90);
 	textLevel.setFillColor(Color::White);
 	textLevel.setPosition(150, 260);
-
-	// 수정할 일 없는 단순 텍스트에 ss 사용한 이유는 ???
-	// 딱히 없다면 그냥 string 씁시다~~
-	std::stringstream levelUpStream;
-	levelUpStream <<
-		"1- Increased rate of fire" <<
-		"\n2- Increased clip size(next reload)" <<
-		"\n3- Increased max health" <<
-		"\n4- Increased run speed" <<
-		"\n5- More and better health pickups" <<
-		"\n6- More and better ammo pickups";
-	textLevel.setString(levelUpStream.str());
+	textLevel.setString("1- Increased rate of fire""\n2- Increased clip size(next reload)"
+		"\n3- Increased max health""\n4- Increased run speed" "\n5- More and better ammo pickups""\n6- More and better health pickups");
 
 	mainView.setCenter(resolution.x * 0.5f, resolution.y * 0.5f);
 
@@ -47,11 +37,27 @@ bool LevelUpScene::Init()
 void LevelUpScene::Update(Time& dt)
 {
 	if (InputManager::GetKeyDown(Keyboard::Num1)) {
-		// 총알 발사 속도 !!!
+		player.SpeedUp();
 		sceneManager.ChangeScene(SceneType::STAGE);
 	}
 	if (InputManager::GetKeyDown(Keyboard::Num2)) {
 		GameVal::megazine += 5;
+		sceneManager.ChangeScene(SceneType::STAGE);
+	}
+	if (InputManager::GetKeyDown(Keyboard::Num3)) {
+		player.UpgradeMaxHealth();
+		sceneManager.ChangeScene(SceneType::STAGE);
+	}
+	if (InputManager::GetKeyDown(Keyboard::Num4)) {
+		player.UpgradeSpeed();
+		sceneManager.ChangeScene(SceneType::STAGE);
+	}
+	if (InputManager::GetKeyDown(Keyboard::Num5)) {
+		spickup.AammoUpgrade();
+		sceneManager.ChangeScene(SceneType::STAGE);
+	}
+	if (InputManager::GetKeyDown(Keyboard::Num6)) {
+		spickup.HealthUpgrade();
 		sceneManager.ChangeScene(SceneType::STAGE);
 	}
 
@@ -99,9 +105,9 @@ void LevelUpScene::Update(Time& dt)
 	//	}
 	//	break;
 	//}
-	//if (InputManager::GetKeyDown(Keyboard::Enter)) {
-	//	sceneManager.ChangeScene(SceneType::STAGE);
-	//}
+	if (InputManager::GetKeyDown(Keyboard::Enter)) {
+		sceneManager.ChangeScene(SceneType::STAGE);
+	}
 }
 
 void LevelUpScene::Render()

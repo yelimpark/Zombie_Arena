@@ -6,6 +6,7 @@
 #include "../Zombie/Zombie.h"
 #include "../Bullet/Bullet.h"
 #include "../Pickup/Pickup.h"
+#include "../utils/GameVal.h"
 
 #include <iostream>
 #include <random>
@@ -42,6 +43,7 @@ bool StageScene::Init()
     Pickup* healthPickup = new Pickup(PickupTypes::Health);
     healthPickup->Spawn(true);
     items.push_back(healthPickup);
+    healthBar.Init(resolution);
 
     pause = false;
 
@@ -94,8 +96,8 @@ void StageScene::Update(Time& dt)
 
     player.UpdateCollision(items);
 
-    ui.Update(score, zombieCount, player.GetLeftBullets(), resolution);
-    healthBar.Init(resolution, player.GetHealth());
+    ui.Update(score, zombieCount, player.GetLeftBullets(), GameVal::wave, resolution);
+    healthBar.Update(player.GetHealth());
     mainView.setCenter(player.GetPosition());
 }
 

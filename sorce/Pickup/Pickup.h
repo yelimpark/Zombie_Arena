@@ -40,5 +40,9 @@ public:
 
 	const FloatRect GetBlobalBounds();
 
+	void AammoUpgrade();
+
+	void HealthUpgrade();
+
 	PickupTypes GetType();
 };

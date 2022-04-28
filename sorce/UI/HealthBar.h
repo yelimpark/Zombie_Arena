@@ -15,7 +15,8 @@ private:
 
 public:
 	HealthBar();
-	void Init(Vector2i position, int health);
+	void Init(Vector2i position);
+	void Update(int health);
 	void Draw(RenderWindow& window);
 };
 

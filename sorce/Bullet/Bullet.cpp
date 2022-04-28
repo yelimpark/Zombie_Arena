@@ -77,6 +77,8 @@ void Bullet::Update(float dt)
 	if (distance > DEFAULT_DISTANCE) {
 		stop();
 	}
+
+	
 }
 
 Bullet::~Bullet()

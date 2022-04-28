@@ -19,6 +19,9 @@ private:
 
 	Sprite sprite;
 	std::string textureFilename;
+	
+	//------------------bullet Ãß°¡
+	Bullet sbullet;
 
 	Vector2i resolution;
 	IntRect arena;
@@ -73,7 +76,10 @@ public:
 
 	void GetHealthItem(int amount);
 
-	void UpgradeMaxHealth(int amount);
+	void UpgradeMaxHealth();
+
+	//-----------bullet SpeedUp
+	float SpeedUp();
 
 	bool UpdateCollision(const std::vector<Zombie*>& zombies);
 

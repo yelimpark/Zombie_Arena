@@ -199,10 +199,17 @@ void Player::GetHealthItem(int amount)
 		health = 0;
 	}
 }
-
-void Player::UpgradeMaxHealth(int amount)
+//--------------- int amount 삭제
+void Player::UpgradeMaxHealth()
 {
 	maxHealth += START_HEALTH * 0.2;
+}
+//----------------bullet speed처리 
+float Player::SpeedUp()
+{
+	sbullet.Update(2000.f);
+	
+	return speed;
 }
 
 bool Player::UpdateCollision(const std::vector<Zombie*>& zombies)
