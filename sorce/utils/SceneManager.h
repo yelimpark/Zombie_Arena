@@ -28,9 +28,9 @@ public:
 
 	void Release();
 
-	void Update(float dt);
+	void Update(Time& dt);
 
-	void Render(sf::RenderWindow& window);
+	void Render();
 
 	void ChangeScene(SceneType newScene);
 

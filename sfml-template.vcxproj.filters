@@ -31,6 +31,12 @@
     <Filter Include="소스 파일\Scene">
       <UniqueIdentifier>{027d42c5-6eb0-4f33-91ec-0bd340a3fa43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Framework">
+      <UniqueIdentifier>{33a083a4-283c-4557-9375-5af8b444134c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\CrossCursor">
+      <UniqueIdentifier>{919e5b0d-ca25-4bb4-a17d-aa4e9d614715}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sorce\Player\Player.cpp">
@@ -75,6 +81,12 @@
     <ClCompile Include="sorce\Scene\StageScene.cpp">
       <Filter>소스 파일\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="sorce\Framework\Framework.cpp">
+      <Filter>소스 파일\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="sorce\CrossCursor\CrossCursor.cpp">
+      <Filter>소스 파일\CrossCursor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sorce\Player\Player.h">
@@ -115,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="sorce\Scene\StageScene.h">
       <Filter>소스 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Framework\Framework.h">
+      <Filter>소스 파일\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\CrossCursor\CrossCursor.h">
+      <Filter>소스 파일\CrossCursor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

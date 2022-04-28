@@ -10,9 +10,9 @@ public:
 
 	virtual bool Init() = 0;
 
-	virtual void Update(float dt) = 0;
+	virtual void Update(Time& dt) = 0;
 
-	virtual void Render(sf::RenderWindow& window) = 0;
+	virtual void Render() = 0;
 
 	virtual void Release() = 0;
 

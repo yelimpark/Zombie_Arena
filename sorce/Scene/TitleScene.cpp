@@ -1,23 +1,27 @@
 #include "TitleScene.h"
+#include "../utils/TextureHolder.h"
+#include "../Framework/Framework.h"
 
 TitleScene::TitleScene(SceneManager& sceneManager)
-	:Scene(sceneManager)
+	:Scene(sceneManager),
+	window(Framework::Getwindow())
 {
 }
 
 bool TitleScene::Init()
 {
-	return false;
+	bg.setTexture(TextureHolder::getTexture("graphics/background.png"));
+	return true;
 }
 
-void TitleScene::Update(float dt)
+void TitleScene::Update(Time& dt)
 {
 }
 
-void TitleScene::Render(sf::RenderWindow& window)
+void TitleScene::Render()
 {
+	Framework::Getwindow().draw(bg);
 }
-
 
 void TitleScene::Release()
 {

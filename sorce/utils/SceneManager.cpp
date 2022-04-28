@@ -1,28 +1,41 @@
 #include "SceneManager.h"
+#include "../Scene/StageScene.h"
+#include "../Scene/TitleScene.h"
+#include <assert.h>
+
+SceneManager* SceneManager::MgrInstance;
 
 SceneManager::SceneManager()
 	:currScene((SceneType)0)
 {
-
+	assert(!MgrInstance);
+	MgrInstance = this;
 }
 
 void SceneManager::Init()
 {
-	// scenes[(int)SceneType::TITLE] = new ...
+	scenes[(int)SceneType::TITLE] = new TitleScene(*this);
+
+	scenes[(int)SceneType::STAGE] = new StageScene(*this);
+
+	scenes[(int)currScene]->Init();
 }
 
 void SceneManager::Release()
 {
+	// 씬  다 구현한 후엔 반복문으로 수정
+	delete scenes[(int)SceneType::TITLE];
+	delete scenes[(int)SceneType::STAGE];
 }
 
-void SceneManager::Update(float dt)
+void SceneManager::Update(Time& dt)
 {
 	scenes[(int)currScene]->Update(dt);
 }
 
-void SceneManager::Render(sf::RenderWindow& window)
+void SceneManager::Render()
 {
-	scenes[(int)currScene]->Render(window);
+	scenes[(int)currScene]->Render();
 }
 
 void SceneManager::ChangeScene(SceneType newScene)
@@ -35,4 +48,6 @@ void SceneManager::ChangeScene(SceneType newScene)
 SceneManager::~SceneManager()
 {
 	Release();
+	assert(MgrInstance);
+	MgrInstance = 0;
 }

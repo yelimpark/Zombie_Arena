@@ -1,17 +1,25 @@
 #pragma once
 #include "Scene.h"
+#include <SFML/Graphics.hpp>
 
 class TitleScene : public Scene {
 private:
+	Sprite bg;
+
+	Font font;
+
+	Text text;
+
+	RenderWindow& window;
 
 public:
 	TitleScene(SceneManager& sceneManager);
 
 	virtual bool Init();
 
-	virtual void Update(float dt);
+	virtual void Update(Time& dt);
 
-	virtual void Render(sf::RenderWindow& window);
+	virtual void Render();
 
 	virtual void Release();
 

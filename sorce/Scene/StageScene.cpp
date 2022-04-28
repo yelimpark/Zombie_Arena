@@ -1,8 +1,7 @@
 #include "StageScene.h"
 
-#include "../utils/InputManager.h"
-#include "../utils/utils.h"
-#include "../utils/TextureHolder.h"
+#include "../Framework/Framework.h"
+
 #include "../Player/Player.h"
 #include "../Zombie/Zombie.h"
 #include "../Bullet/Bullet.h"
@@ -13,46 +12,78 @@
 
 using namespace sf;
 
-
 StageScene::StageScene(SceneManager& sceneManager)
-	:Scene(sceneManager)
+	:Scene(sceneManager), zombieCount(100),
+    resolution(Framework::GetResolution()),
+    window(Framework::Getwindow()),
+    mainView(Framework::GetView())
 {
+
 }
 
 bool StageScene::Init()
 {
-    //Pickup * ammoPickup = new Pickup(PickupTypes::Ammo);
-    //ammoPickup->Spawn(true);
-    //items.push_back(ammoPickup);
+    arena.width = resolution.x;
+    arena.height = resolution.y;
 
-    //player.Spawn(arena, resolution, 0.f);
-    //
-    //CreateZobies(zombies, 5, arena);
+    player.Spawn(arena, resolution, 0.f);
+    CreateBackground();
+    CreateZobies();
+    CreateBullets();
 
-    //CreateBullets(bullets, 1000);
+    Pickup* ammoPickup = new Pickup(PickupTypes::Ammo);
+    ammoPickup->Spawn(true);
+    items.push_back(ammoPickup);
 
-    //std::vector<FloatRect> walls;
-    //VertexArray tileMap;
-    //CreateBackground(tileMap, arena);
-
-    //Time playTime;
-
-    //View mainView(FloatRect(0, 0, resolution.x, resolution.y));
-
-    //Texture& texBg = TextureHolder::getTexture("graphics/background_sheet.png");
+    texBg = TextureHolder::getTexture("graphics/background_sheet.png");
 
 	return true;
 }
 
-void StageScene::Update(float dt)
+void StageScene::Update(Time& dt)
 {
+    playTime += dt;
+
+    player.Update(dt.asSeconds());
+
+    for (auto zombie : zombies) {
+        zombie->Update(dt.asSeconds(), player.GetPosition());
+    }
+
+    for (auto item : items) {
+        item->Update(dt.asSeconds());
+    }
+
+    player.UpdateCollision(zombies);
+    for (auto zombie : zombies) {
+        if (zombie->UpdateCollision(player, playTime)) {
+            break;
+        }
+    }
+
+    player.UpdateCollision(items);
+
+    mainView.setCenter(player.GetPosition());
 }
 
-void StageScene::Render(sf::RenderWindow& window)
+void StageScene::Render()
 {
+    window.draw(tileMap, &texBg);
+
+    for (auto item : items) {
+        if (item->IsSpawned()) {
+            window.draw(item->GetSprite());
+        }
+    }
+
+    for (auto zombie : zombies) {
+        zombie->Draw(window);
+    }
+
+    player.Draw(window);
 }
 
-void CreateBackground(VertexArray& va, IntRect arena) {
+void StageScene::CreateBackground() {
     const int TILE_SIZE = 50;
     const int TILE_TYPES = 3;
     const int VERTS_IN_QUAD = 4;
@@ -60,8 +91,8 @@ void CreateBackground(VertexArray& va, IntRect arena) {
     int cols = arena.width / TILE_SIZE;
     int rows = arena.height / TILE_SIZE;
 
-    va.setPrimitiveType(Quads);
-    va.resize(cols * rows * VERTS_IN_QUAD);
+    tileMap.setPrimitiveType(Quads);
+    tileMap.resize(cols * rows * VERTS_IN_QUAD);
 
     int idx = 0;
 
@@ -74,10 +105,10 @@ void CreateBackground(VertexArray& va, IntRect arena) {
 
             int vertexIdx = idx * VERTS_IN_QUAD;
 
-            va[vertexIdx + 0].position = Vector2f(x, y);
-            va[vertexIdx + 1].position = Vector2f(x + TILE_SIZE, y);
-            va[vertexIdx + 2].position = Vector2f(x + TILE_SIZE, y + TILE_SIZE);
-            va[vertexIdx + 3].position = Vector2f(x, y + TILE_SIZE);
+            tileMap[vertexIdx + 0].position = Vector2f(x, y);
+            tileMap[vertexIdx + 1].position = Vector2f(x + TILE_SIZE, y);
+            tileMap[vertexIdx + 2].position = Vector2f(x + TILE_SIZE, y + TILE_SIZE);
+            tileMap[vertexIdx + 3].position = Vector2f(x, y + TILE_SIZE);
 
             float texIdx = 0;
 
@@ -90,16 +121,15 @@ void CreateBackground(VertexArray& va, IntRect arena) {
 
             float offset = texIdx * TILE_SIZE;
 
-            va[vertexIdx + 0].texCoords = Vector2f(0.f, offset);
-            va[vertexIdx + 1].texCoords = Vector2f(TILE_SIZE, offset);
-            va[vertexIdx + 2].texCoords = Vector2f(TILE_SIZE, offset + TILE_SIZE);
-            va[vertexIdx + 3].texCoords = Vector2f(0.f, offset + TILE_SIZE);
-
+            tileMap[vertexIdx + 0].texCoords = Vector2f(0.f, offset);
+            tileMap[vertexIdx + 1].texCoords = Vector2f(TILE_SIZE, offset);
+            tileMap[vertexIdx + 2].texCoords = Vector2f(TILE_SIZE, offset + TILE_SIZE);
+            tileMap[vertexIdx + 3].texCoords = Vector2f(0.f, offset + TILE_SIZE);
         }
     }
 }
 
-void CreateZobies(std::vector<Zombie*>& zombies, int count, IntRect arena) {
+void StageScene::CreateZobies() {
     for (auto v : zombies) {
         delete v;
     }
@@ -112,7 +142,7 @@ void CreateZobies(std::vector<Zombie*>& zombies, int count, IntRect arena) {
     int minY = arena.top + offset;
     int maxY = arena.height - offset;
 
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < zombieCount; ++i) {
         int x = utils::RandomRange(minX, maxX + 1);
         int y = utils::RandomRange(minY, maxY + 1);
 
@@ -125,79 +155,18 @@ void CreateZobies(std::vector<Zombie*>& zombies, int count, IntRect arena) {
     }
 }
 
-void CreateBullets(std::vector<Bullet*>& bullets, int count) {
+void StageScene::CreateBullets() {
     for (auto v : bullets) {
         delete v;
     }
 
     bullets.clear();
 
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < 1000; ++i) {
         Bullet* bullet = new Bullet();
         bullets.push_back(bullet);
     }
 }
-
-//void StageScene::Run(float dt, sf::RenderWindow& window)
-//{
-    //playTime += dt;
-
-    //Event event;
-
-    //InputManager::ClearInput();
-
-    //while (window.pollEvent(event))
-    //{
-    //    if (event.type == Event::Closed)
-    //        window.close();
-
-    //    InputManager::ProcessInput(event);
-    //}
-
-    //InputManager::Update(dt.asSeconds(), window, mainView);
-
-    //player.Update(dt.asSeconds());
-
-    //for (auto zombie : zombies) {
-    //    zombie->Update(dt.asSeconds(), player.GetPosition());
-    //}
-
-    //ammoPickup.Update(dt.asSeconds());
-
-    //player.UpdateCollision(zombies);
-    //for (auto zombie : zombies) {
-    //    if (zombie->UpdateCollision(player, playTime)) {
-    //        break;
-    //    }
-    //}
-    //player.UpdateCollision(items);
-
-    //mainView.setCenter(player.GetPosition());
-
-    //spriteCrosshair.setPosition(InputManager::GetMouseWorldPosition());
-
-    //window.clear();
-    //window.setView(mainView);
-
-    //// ui
-
-    //window.draw(tileMap, &texBg);
-
-    //if (ammoPickup.IsSpawned()) {
-    //    window.draw(ammoPickup.GetSprite());
-    //}
-
-    //for (auto zombie : zombies) {
-    //    zombie->Draw(window);
-    //}
-
-    //window.draw(player.GetSprite());
-
-    //player.Draw(window);
-
-
-    //window.display();
-//}
 
 void StageScene::Release()
 {
