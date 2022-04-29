@@ -10,24 +10,23 @@ private:
 	const float START_COUNT_OF_BULLETS = 24;
 	const float START_WAVE = 0;
 
-	Font font;
 	Text textScore;
 	Text textBullet;
 	Text textHighScore;
 	Text zombieCount;
 	Text waveNum;
 
-	Texture texture;
 	Sprite sprite;
 
 	int numOfZombies;
 	int score;
 	int highScore;
-	int wave;
+
+	static bool isInitUIFontInfo;
 
 public:
 	UIManager();
-	void Update(int score, int numOfZombies, int bullets, Vector2i position);
+	void Update(int numOfZombies, int bullets, int wave, Vector2i position);
 	void Draw(RenderWindow& window);
 };
 

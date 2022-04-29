@@ -17,13 +17,7 @@ struct ZombieInfo {
 	std::string textureFilename;
 	float speed;
 	int health;
-
-};
-
-enum class zombieStatus {
-	ALIVE,
-	DEAD,
-	INACTIVE
+	int score;
 };
 
 class Zombie {
@@ -35,10 +29,9 @@ private:
 
 	float speed;
 	int health;
+	int score;
 
-	zombieStatus status;
-	const float SHOW_DEAD_ZOMBIE = 5.f;
-	float timeAfterDeath;
+	bool Isdead;
 
 	static std::vector<ZombieInfo> zombieInfo;
 	static bool isInitzombieInfo;
@@ -56,6 +49,7 @@ public:
 
 	FloatRect GetGlobalBound();
 	Sprite Getsprite();
+	Vector2f GetPosition();
 
 	void Draw(RenderWindow& window, IntRect& arena);
 };

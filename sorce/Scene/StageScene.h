@@ -9,6 +9,7 @@
 class Pickup;
 class Zombie;
 class Bullet;
+class Blood;
 
 class StageScene : public Scene {
 private:
@@ -21,10 +22,10 @@ private:
 	std::list<Pickup*> items;
 	std::vector<Zombie*> zombies;
 	std::vector<Bullet*> bullets;
+	std::vector<Blood*> bloods;
 	VertexArray tileMap;
 
 	int zombieCount;
-	int score;
 	
 	const Vector2i& resolution;
 	RenderWindow& window;
@@ -40,6 +41,7 @@ private:
 	void CreateZobies();
 	void CreateBullets();
 	void CreateBackground();
+	void CreateBloods();
 
 public:
 	StageScene(SceneManager& sceneManager);

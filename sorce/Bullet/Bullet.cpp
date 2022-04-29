@@ -2,6 +2,7 @@
 #include "../utils/InputManager.h"
 #include "../utils/utils.h"
 #include "../Zombie/Zombie.h"
+#include "../Zombie/Blood.h"
 
 using namespace sf;
 
@@ -33,22 +34,22 @@ FloatRect Bullet::GetGlobalBound() const
 	return shape.getGlobalBounds();
 }
 
-bool Bullet::UpdateCollision(const std::vector<Zombie*>& zombies)
+bool Bullet::UpdateCollision(const std::vector<Zombie*>& zombies, std::vector<Blood*>& bloods)
 {
 	FloatRect bounds = shape.getGlobalBounds();
 
 	for (auto zombie : zombies) {
-		if (zombie->IsAlive()) {
-			if (bounds.intersects(zombie->GetGlobalBound())) {
-				zombie->OnHitted();
-
-				stop();
-
+		if (zombie->IsAlive() && bounds.intersects(zombie->GetGlobalBound())) {
+			stop();
+			Blood* blood = new Blood();
+			blood->Spawn(zombie->GetPosition());
+			if (zombie->OnHitted()) {
+				bloods.push_back(blood);
 				return true;
 			}
+			break;
 		}
 	}
-
 	return false;
 }
 

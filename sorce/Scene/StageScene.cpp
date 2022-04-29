@@ -6,6 +6,7 @@
 #include "../Zombie/Zombie.h"
 #include "../Bullet/Bullet.h"
 #include "../Pickup/Pickup.h"
+#include "../Zombie/Blood.h"
 
 #include <iostream>
 #include <random>
@@ -13,7 +14,7 @@
 using namespace sf;
 
 StageScene::StageScene(SceneManager& sceneManager)
-	:Scene(sceneManager), zombieCount(10), pause(true), score(0),
+	:Scene(sceneManager), zombieCount(10), pause(true),
     resolution(Framework::GetResolution()),
     window(Framework::Getwindow()),
     mainView(Framework::GetView()),
@@ -28,7 +29,6 @@ bool StageScene::Init()
     arena.height = 1200.f;
 
     zombieCount = 10;
-    score = 0;
 
     player.Spawn(arena, resolution, 50.f);
     CreateBackground();
@@ -40,6 +40,7 @@ bool StageScene::Init()
 
     Pickup* healthPickup = new Pickup(PickupTypes::Health);
     items.push_back(healthPickup);
+    healthBar.Init(player.GetHealth(), resolution);
 
     for (auto item : items) {
         item->SetArena(arena);
@@ -90,28 +91,34 @@ void StageScene::Update(Time& dt)
         item->Update(dt.asSeconds());
     }
 
-    if (player.UpdateCollision(zombies)) {
-        --zombieCount;
-        ++score;
+    for (auto blood : bloods) {
+        blood->Update(dt.asSeconds());
     }
+
+    zombieCount -= player.UpdateCollision(zombies, bloods);
+
     for (auto zombie : zombies) {
         if (zombie->UpdateCollision(player, playTime)) {
-            healthBar.Update(resolution, player.GetHealth());
+            healthBar.Update(player.GetHealth());
             break;
         }
     }
 
     if (player.UpdateCollision(items)) {
-        healthBar.Update(resolution, player.GetHealth());
+        healthBar.Update(player.GetHealth());
     }
 
-    ui.Update(score, zombieCount, player.GetLeftBullets(), resolution);
+    ui.Update(zombieCount, player.GetLeftBullets(), GameVal::wave, resolution);
     mainView.setCenter(player.GetPosition());
 }
 
 void StageScene::Render()
 {
     window.draw(tileMap, &TextureHolder::getTexture("graphics/background_sheet.png"));
+
+    for (auto blood : bloods) {
+        blood->Draw(window);
+    }
 
     for (auto item : items) {
         if (item->IsSpawned()) {
@@ -176,10 +183,10 @@ void StageScene::CreateBackground() {
     }
 }
 
-
 void StageScene::CreateZobies() {
     for (auto v : zombies) {
-        delete v;
+        if (v != nullptr)
+            delete v;
     }
 
     zombies.clear();
@@ -213,7 +220,8 @@ void StageScene::CreateZobies() {
 
 void StageScene::CreateBullets() {
     for (auto v : bullets) {
-        delete v;
+        if (v != nullptr)
+            delete v;
     }
 
     bullets.clear();
@@ -227,24 +235,35 @@ void StageScene::CreateBullets() {
 void StageScene::Release()
 {
     for (auto item : items) {
-        delete item;
+        if (item != nullptr)
+            delete item;
     }
 
     items.clear();
 
     for (auto v : zombies) {
-        delete v;
+        if (v != nullptr)
+            delete v;
     }
 
     zombies.clear();
 
     for (auto v : bullets) {
-        delete v;
+        if (v != nullptr)
+            delete v;
     }
 
     bullets.clear();
+
+    for (auto v : bloods) {
+        if (v != nullptr)
+            delete v;
+    }
+
+    bloods.clear();
 }
 
 StageScene::~StageScene()
 {
+    Release();
 }

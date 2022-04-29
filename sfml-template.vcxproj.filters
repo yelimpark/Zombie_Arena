@@ -102,6 +102,9 @@
     <ClCompile Include="sorce\UI\HealthBar.cpp">
       <Filter>소스 파일\UI</Filter>
     </ClCompile>
+    <ClCompile Include="sorce\Zombie\Blood.cpp">
+      <Filter>소스 파일\Zombie</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sorce\Player\Player.h">
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="sorce\Scene\LevelUpScene.h">
       <Filter>소스 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Zombie\Blood.h">
+      <Filter>소스 파일\Zombie</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

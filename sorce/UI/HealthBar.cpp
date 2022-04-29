@@ -15,20 +15,16 @@ HealthBar::HealthBar()
 
 void HealthBar::Init(int health, Vector2i res)
 {
-	gameoverText.setPosition(res.x * 0.5, res.y * 0.5);
+	rectShape.setPosition(res.x * 0.35f, res.y * 0.8f);
+	rectShape.setFillColor(Color::Red);
 	this->health = health;
+	setSize();
 }
 
-void HealthBar::Update(Vector2i position, int health)
+void HealthBar::Update(int health)
 {
 	this->health = health;
-	float healthBarWidth = health * 3;
-	float healthBarHeight = 30;
-
-	Vector2f healthBarSize = Vector2f(healthBarWidth, healthBarHeight);
-	rectShape.setSize(healthBarSize);
-	rectShape.setPosition(position.x * 0.35f, position.y * 0.8f);
-	rectShape.setFillColor(Color::Red);
+	setSize();
 }
 
 void HealthBar::Draw(RenderWindow& window)
@@ -38,4 +34,13 @@ void HealthBar::Draw(RenderWindow& window)
 	if (health <= 0) {
 		window.draw(gameoverText);
 	}
+}
+
+void HealthBar::setSize()
+{
+	float healthBarWidth = health * 3;
+	float healthBarHeight = 30;
+
+	Vector2f healthBarSize = Vector2f(healthBarWidth, healthBarHeight);
+	rectShape.setSize(healthBarSize);
 }

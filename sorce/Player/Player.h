@@ -8,6 +8,8 @@ using namespace sf;
 
 class Pickup;
 
+class Blood;
+
 class Player
 {
 private:
@@ -75,7 +77,7 @@ public:
 
 	void UpgradeMaxHealth(int amount);
 
-	bool UpdateCollision(const std::vector<Zombie*>& zombies);
+	int UpdateCollision(const std::vector<Zombie*>& zombies, std::vector<Blood*>& bloods);
 
 	bool UpdateCollision(const std::list<Pickup*>& items);
 	

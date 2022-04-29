@@ -2,44 +2,58 @@
 #include <iostream>
 #include <sstream>
 #include "../player/Player.h"
+#include "../utils/FontHolder.h"
+#include "../utils/TextureHolder.h"
+#include "../utils/GameVal.h"
+
+bool UIManager::isInitUIFontInfo = false;
 
 UIManager::UIManager()
-	: wave(START_WAVE), score(0)
+	: score(0)
 {
-	font.loadFromFile("fonts/zombiecontrol.ttf");
-	textScore.setFont(font);
-	textScore.setFillColor(Color::White);
-	textScore.setCharacterSize(60);
+	FontHolder::getfont("fonts/zombiecontrol.ttf");
 
-	textHighScore.setFont(font);
-	textHighScore.setFillColor(Color::White);
-	textHighScore.setCharacterSize(60);
+	if (!isInitUIFontInfo)
+	{
+		textScore.setFont(FontHolder::getfont("fonts/zombiecontrol.ttf"));
+		textHighScore.setFont(FontHolder::getfont("fonts/zombiecontrol.ttf"));
+		zombieCount.setFont(FontHolder::getfont("fonts/zombiecontrol.ttf"));
+		waveNum.setFont(FontHolder::getfont("fonts/zombiecontrol.ttf"));
+		textBullet.setFont(FontHolder::getfont("fonts/zombiecontrol.ttf"));
+		sprite.setTexture(TextureHolder::getTexture("graphics/ammo_icon.png"));
 
-	zombieCount.setFont(font);
-	zombieCount.setFillColor(Color::White);
-	zombieCount.setCharacterSize(50);
+		textScore.setFillColor(Color::White);
+		textScore.setCharacterSize(60);
 
-	waveNum.setFont(font);
-	waveNum.setFillColor(Color::White);
-	waveNum.setCharacterSize(50);
+		textHighScore.setFillColor(Color::White);
+		textHighScore.setCharacterSize(60);
 
-	textBullet.setFont(font);
-	textBullet.setFillColor(Color::White);
-	textBullet.setCharacterSize(50);
-	FloatRect textRect = textBullet.getLocalBounds();
-	textBullet.setOrigin(
-		textRect.left + textRect.width * 0.5f,
-		textRect.top + textRect.height * 0.5f
-	);
-	texture.loadFromFile("graphics/ammo_icon.png");
+
+		zombieCount.setFillColor(Color::White);
+		zombieCount.setCharacterSize(50);
+
+
+		waveNum.setFillColor(Color::White);
+		waveNum.setCharacterSize(50);
+
+		textBullet.setFillColor(Color::White);
+		textBullet.setCharacterSize(50);
+		FloatRect textRect = textBullet.getLocalBounds();
+		textBullet.setOrigin(
+			textRect.left + textRect.width * 0.5f,
+			textRect.top + textRect.height * 0.5f
+		);
+
+		isInitUIFontInfo = true;
+	}
 }
 
-void UIManager::Update(int score, int numOfZombies, int bullets, Vector2i position)
+void UIManager::Update(int numOfZombies, int bullets, int wave, Vector2i position)
 {
 
 	//--------------Á¡¼ö--------------
 	stringstream ss;
-	ss << "Score = " << score;
+	ss << "Score = " << GameVal::score;
 	textScore.setString(ss.str());
 	textScore.setPosition(position.x * 0.18f, position.y * 0.1f);
 
@@ -61,7 +75,6 @@ void UIManager::Update(int score, int numOfZombies, int bullets, Vector2i positi
 	waveNum.setPosition(position.x * 0.65f, position.y * 0.8f);
 
 	//--------------ÀÜÅº¼ö--------------
-	sprite.setTexture(texture);
 	sprite.setPosition(position.x * 0.18f, position.y * 0.8f);
 
 	stringstream bs;
