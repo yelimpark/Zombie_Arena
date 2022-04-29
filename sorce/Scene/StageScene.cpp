@@ -14,10 +14,10 @@
 using namespace sf;
 
 StageScene::StageScene(SceneManager& sceneManager)
-	:Scene(sceneManager), zombieCount(10), pause(true),
+	:Scene(sceneManager), zombieCount(GameVal::wave * 10), pause(true),
     resolution(Framework::GetResolution()),
     window(Framework::Getwindow()),
-    mainView(Framework::GetView()),
+    mainView(Framework::GetGameView()),
     uiView(Framework::GetUIView())
 {
 
@@ -28,7 +28,7 @@ bool StageScene::Init()
     arena.width = 1200.f;
     arena.height = 1200.f;
 
-    zombieCount = 10;
+    zombieCount = GameVal::wave * 10;
 
     player.Spawn(arena, resolution, 50.f);
     CreateBackground();
@@ -75,7 +75,8 @@ void StageScene::Update(Time& dt)
         pause = true;
     }
 
-    if (zombieCount <= 0) {
+    if (zombieCount <= 8) {
+        ++GameVal::wave;
         sceneManager.ChangeScene(SceneType::LEVELUP);
     }
 
@@ -108,12 +109,13 @@ void StageScene::Update(Time& dt)
         healthBar.Update(player.GetHealth());
     }
 
-    ui.Update(zombieCount, player.GetLeftBullets(), GameVal::wave, resolution);
+    ui.Update(zombieCount, player.GetLeftBullets(), resolution);
     mainView.setCenter(player.GetPosition());
 }
 
 void StageScene::Render()
 {
+    window.setView(mainView);
     window.draw(tileMap, &TextureHolder::getTexture("graphics/background_sheet.png"));
 
     for (auto blood : bloods) {

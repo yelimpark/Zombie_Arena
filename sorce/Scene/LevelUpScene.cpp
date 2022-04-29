@@ -14,7 +14,7 @@ LevelUpScene::LevelUpScene(SceneManager& sceneManager)
 	:Scene(sceneManager),
 	window(Framework::Getwindow()),
 	resolution(Framework::GetResolution()),
-	mainView(Framework::GetView())
+	mainView(Framework::GetUIView())
 {
 }
 
@@ -38,9 +38,6 @@ bool LevelUpScene::Init()
 		"\n5- More and better health pickups" <<
 		"\n6- More and better ammo pickups";
 	textLevel.setString(levelUpStream.str());
-
-	mainView.setCenter(resolution.x * 0.5f, resolution.y * 0.5f);
-
 	return true;
 }
 
@@ -106,6 +103,7 @@ void LevelUpScene::Update(Time& dt)
 
 void LevelUpScene::Render()
 {
+	window.setView(mainView);
 	window.draw(bg);
 	window.draw(textLevel);
 }

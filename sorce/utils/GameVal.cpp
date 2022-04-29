@@ -8,5 +8,5 @@ void GameVal::Init()
 {
 	wave = 1;
 	score = 0;
-	megazine = 5;
+	megazine = 24;
 }

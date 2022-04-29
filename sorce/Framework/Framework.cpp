@@ -5,7 +5,7 @@ Framework* Framework::FrameInstance = 0;
 
 Vector2i Framework::resolution(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height);
 RenderWindow Framework::window(VideoMode(resolution.x, resolution.y), "Zombie Arena!", Style::Default);
-View Framework::mainView(FloatRect(0, 0, resolution.x, resolution.y));
+View Framework::GameView(FloatRect(0, 0, resolution.x, resolution.y));
 View Framework::uiView(FloatRect(0, 0, resolution.x, resolution.y));
 
 Framework::Framework()
@@ -24,9 +24,9 @@ const Vector2i& Framework::GetResolution()
     return resolution;
 }
 
-View& Framework::GetView()
+View& Framework::GetGameView()
 {
-    return mainView;
+    return GameView;
 }
 
 View& Framework::GetUIView()
@@ -65,7 +65,6 @@ int Framework::Run()
         crossCursor.Update();
 
         window.clear();
-        window.setView(mainView);
         sMgr.Render();
         crossCursor.Render();
         window.display();

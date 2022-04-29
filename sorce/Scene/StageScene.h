@@ -41,7 +41,6 @@ private:
 	void CreateZobies();
 	void CreateBullets();
 	void CreateBackground();
-	void CreateBloods();
 
 public:
 	StageScene(SceneManager& sceneManager);

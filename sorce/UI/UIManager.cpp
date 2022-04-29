@@ -48,7 +48,7 @@ UIManager::UIManager()
 	}
 }
 
-void UIManager::Update(int numOfZombies, int bullets, int wave, Vector2i position)
+void UIManager::Update(int numOfZombies, int bullets, Vector2i position)
 {
 
 	//--------------점수--------------
@@ -70,7 +70,7 @@ void UIManager::Update(int numOfZombies, int bullets, int wave, Vector2i positio
 
 	//--------------웨이브--------------
 	stringstream ws;
-	ws << "Wave : " << wave;
+	ws << "Wave : " << GameVal::wave;
 	waveNum.setString(ws.str());
 	waveNum.setPosition(position.x * 0.65f, position.y * 0.8f);
 
@@ -78,11 +78,9 @@ void UIManager::Update(int numOfZombies, int bullets, int wave, Vector2i positio
 	sprite.setPosition(position.x * 0.18f, position.y * 0.8f);
 
 	stringstream bs;
-	bs << bullets << "/" << START_COUNT_OF_BULLETS;
+	bs << bullets << "/" << GameVal::megazine;
 	textBullet.setString(bs.str());
 	textBullet.setPosition(position.x * 0.22f, position.y * 0.8f);
-
-
 }
 
 void UIManager::Draw(RenderWindow& window)

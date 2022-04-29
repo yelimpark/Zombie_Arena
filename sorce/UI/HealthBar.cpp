@@ -18,6 +18,7 @@ void HealthBar::Init(int health, Vector2i res)
 	rectShape.setPosition(res.x * 0.35f, res.y * 0.8f);
 	rectShape.setFillColor(Color::Red);
 	this->health = health;
+	gameoverText.setPosition(res.x * 0.5f, res.y * 0.5f);
 	setSize();
 }
 

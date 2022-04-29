@@ -26,7 +26,7 @@ private:
 
 public:
 	UIManager();
-	void Update(int numOfZombies, int bullets, int wave, Vector2i position);
+	void Update(int numOfZombies, int bullets, Vector2i position);
 	void Draw(RenderWindow& window);
 };
 
