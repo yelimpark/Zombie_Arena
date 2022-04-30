@@ -6,7 +6,7 @@
 #include "../Zombie/Zombie.h"
 #include "../Bullet/Bullet.h"
 #include "../Pickup/Pickup.h"
-#include "../utils/GameVal.h"
+#include "../Zombie/Blood.h"
 
 #include <iostream>
 #include <random>
@@ -14,10 +14,10 @@
 using namespace sf;
 
 StageScene::StageScene(SceneManager& sceneManager)
-	:Scene(sceneManager), zombieCount(10), pause(true), score(0),
+    :Scene(sceneManager), zombieCount(GameVal::wave * 10), pause(true),
     resolution(Framework::GetResolution()),
     window(Framework::Getwindow()),
-    mainView(Framework::GetView()),
+    mainView(Framework::GetGameView()),
     uiView(Framework::GetUIView())
 {
 
@@ -28,8 +28,7 @@ bool StageScene::Init()
     arena.width = 1200.f;
     arena.height = 1200.f;
 
-    zombieCount = 10;
-    score = 0;
+    zombieCount = GameVal::wave * 10;
 
     player.Spawn(arena, resolution, 50.f);
     CreateBackground();
@@ -37,24 +36,29 @@ bool StageScene::Init()
     CreateBullets();
 
     Pickup* ammoPickup = new Pickup(PickupTypes::Ammo);
-    ammoPickup->Spawn(true);
     items.push_back(ammoPickup);
 
     Pickup* healthPickup = new Pickup(PickupTypes::Health);
-    healthPickup->Spawn(true);
     items.push_back(healthPickup);
-    healthBar.Init(resolution);
+    healthBar.Init(player.GetHealth(), resolution);
+
+    for (auto item : items) {
+        item->SetArena(arena);
+        item->Spawn(true);
+    }
+
+    healthBar.Init(player.GetHealth(), resolution);
 
     pause = false;
 
-	return true;
+    return true;
 }
 
 void StageScene::Update(Time& dt)
 {
     if (pause) {
-        if (player.GetHealth() < 0 && InputManager::GetKeyDown(Keyboard::Enter)) {
-            GameVal::wave = 1;
+        if (player.GetHealth() <= 0 && InputManager::GetKeyDown(Keyboard::Enter)) {
+            GameVal::Init();
             sceneManager.ChangeScene(SceneType::TITLE);
         }
 
@@ -66,8 +70,7 @@ void StageScene::Update(Time& dt)
     }
 
     if (InputManager::GetKeyDown(Keyboard::Enter) ||
-        player.GetHealth() <= 0 ||
-        zombieCount <= 0)
+        player.GetHealth() <= 0)
     {
         pause = true;
     }
@@ -89,26 +92,35 @@ void StageScene::Update(Time& dt)
         item->Update(dt.asSeconds());
     }
 
-    if (player.UpdateCollision(zombies)) {
-        --zombieCount;
-        ++score;
+    for (auto blood : bloods) {
+        blood->Update(dt.asSeconds());
     }
+
+    zombieCount -= player.UpdateCollision(zombies, bloods);
+
     for (auto zombie : zombies) {
         if (zombie->UpdateCollision(player, playTime)) {
+            healthBar.Update(player.GetHealth());
             break;
         }
     }
 
-    player.UpdateCollision(items);
+    if (player.UpdateCollision(items)) {
+        healthBar.Update(player.GetHealth());
+    }
 
-    ui.Update(score, zombieCount, player.GetLeftBullets(), GameVal::wave, resolution);
-    healthBar.Update(player.GetHealth());
+    ui.Update(zombieCount, player.GetLeftBullets(), resolution);
     mainView.setCenter(player.GetPosition());
 }
 
 void StageScene::Render()
 {
+    window.setView(mainView);
     window.draw(tileMap, &TextureHolder::getTexture("graphics/background_sheet.png"));
+
+    for (auto blood : bloods) {
+        blood->Draw(window);
+    }
 
     for (auto item : items) {
         if (item->IsSpawned()) {
@@ -173,10 +185,10 @@ void StageScene::CreateBackground() {
     }
 }
 
-
 void StageScene::CreateZobies() {
     for (auto v : zombies) {
-        delete v;
+        if (v != nullptr)
+            delete v;
     }
 
     zombies.clear();
@@ -192,7 +204,7 @@ void StageScene::CreateZobies() {
 
         if (utils::RandomBool()) {
             x = utils::RandomRange(minX, maxX + 1);
-            y = (utils::RandomBool())? utils::RandomRange(minY, arena.top) : utils::RandomRange(arena.height, maxY);
+            y = (utils::RandomBool()) ? utils::RandomRange(minY, arena.top) : utils::RandomRange(arena.height, maxY);
         }
         else {
             x = (utils::RandomBool()) ? utils::RandomRange(minX, arena.left) : utils::RandomRange(arena.width, maxX);
@@ -210,7 +222,8 @@ void StageScene::CreateZobies() {
 
 void StageScene::CreateBullets() {
     for (auto v : bullets) {
-        delete v;
+        if (v != nullptr)
+            delete v;
     }
 
     bullets.clear();
@@ -224,24 +237,35 @@ void StageScene::CreateBullets() {
 void StageScene::Release()
 {
     for (auto item : items) {
-        delete item;
+        if (item != nullptr)
+            delete item;
     }
 
     items.clear();
 
     for (auto v : zombies) {
-        delete v;
+        if (v != nullptr)
+            delete v;
     }
 
     zombies.clear();
 
     for (auto v : bullets) {
-        delete v;
+        if (v != nullptr)
+            delete v;
     }
 
     bullets.clear();
+
+    for (auto v : bloods) {
+        if (v != nullptr)
+            delete v;
+    }
+
+    bloods.clear();
 }
 
 StageScene::~StageScene()
 {
+    Release();
 }

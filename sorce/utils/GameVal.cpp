@@ -1,5 +1,12 @@
 #include "GameVal.h"
 
-int GameVal::wave = 1;
-int GameVal::score = 0;
-int GameVal::megazine = 5;
+int GameVal::wave;
+int GameVal::score;
+int GameVal::megazine;
+
+void GameVal::Init()
+{
+	wave = 1;
+	score = 0;
+	megazine = 24;
+}

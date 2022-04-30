@@ -12,7 +12,7 @@ class Framework {
 private:
     static Vector2i resolution;
     static RenderWindow window;
-    static View mainView;
+    static View GameView;
     static View uiView;
 
     TextureHolder textureHolder;
@@ -32,7 +32,7 @@ public:
 
     static const Vector2i& GetResolution();
 
-    static View& GetView();
+    static View& GetGameView();
 
     static View& GetUIView();
 

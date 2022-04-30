@@ -14,7 +14,7 @@ Player::Player()
 	distanceToMuzzle(45.0f)
 {
 	sprite.setTexture(TextureHolder::getTexture(textureFilename));
-	
+
 	utils::SetOrigin(sprite, Pivots::Center);
 
 	for (int i = 0; i < BULLET_CACHE_SIZE; ++i) {
@@ -37,7 +37,7 @@ Player::~Player()
 
 void Player::Shoot(Vector2f dir)
 {
-	dir  = utils::NomalizeVector(dir);
+	dir = utils::NomalizeVector(dir);
 	Vector2f spawnPos = position + dir * distanceToMuzzle;
 
 	if (unuseBullets.empty()) {
@@ -205,16 +205,16 @@ void Player::UpgradeMaxHealth(int amount)
 	maxHealth += START_HEALTH * 0.2;
 }
 
-bool Player::UpdateCollision(const std::vector<Zombie*>& zombies)
+int Player::UpdateCollision(const std::vector<Zombie*>& zombies, std::vector<Blood*>& bloods)
 {
-	bool isCollied = false;
+	int kills = 0;
 
 	for (auto bullet : useBullets) {
-		if (bullet->UpdateCollision(zombies)) {
-			isCollied = true;
+		if (bullet->UpdateCollision(zombies, bloods)) {
+			kills++;
 		}
 	}
-	return isCollied;
+	return kills;
 }
 
 bool Player::UpdateCollision(const std::list<Pickup*>& items)
@@ -238,7 +238,7 @@ bool Player::UpdateCollision(const std::list<Pickup*>& items)
 			default:
 				break;
 			}
-			
+
 			isCollied = true;
 
 		}

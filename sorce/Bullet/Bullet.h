@@ -5,6 +5,7 @@ using namespace sf;
 
 // ref 일때 전방선언으로 해결
 class Zombie;
+class Blood;
 
 class Bullet {
 private:
@@ -32,7 +33,7 @@ public:
 
 	FloatRect GetGlobalBound() const;
 
-	bool UpdateCollision(const std::vector<Zombie*>& zombies);
+	bool UpdateCollision(const std::vector<Zombie*>& zombies, std::vector<Blood*>& bloods);
 
 	void stop();
 
