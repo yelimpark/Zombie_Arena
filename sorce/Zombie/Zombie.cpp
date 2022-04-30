@@ -70,6 +70,11 @@ void Zombie::Spawn(float x, float y, ZombieTypes type)
 	sprite.setPosition(position);
 }
 
+Vector2f Zombie::GetPosition()
+{
+	return position;
+}
+
 void Zombie::Update(float dt, Vector2f playerPosition)
 {
 	switch (status)
