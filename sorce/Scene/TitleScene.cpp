@@ -8,7 +8,7 @@ TitleScene::TitleScene(SceneManager& sceneManager)
 	:Scene(sceneManager),
 	resolution(Framework::GetResolution()),
 	window(Framework::Getwindow()),
-	mainView(Framework::GetView())
+	mainView(Framework::GetUIView())
 {
 }
 

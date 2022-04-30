@@ -24,7 +24,7 @@ private:
 	static std::random_device rd;
 	static std::mt19937 gen;
 
-public :
+public:
 	static void SetOrigin(Sprite& sprite, Pivots preset);
 
 	static void SetOrigin(Shape& shape, Pivots preset);

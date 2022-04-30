@@ -40,14 +40,14 @@ bool StageScene::Init()
 
     Pickup* healthPickup = new Pickup(PickupTypes::Health);
     items.push_back(healthPickup);
-    healthBar.Init(player.GetHealth(), resolution);
+    healthBar.Init(resolution);
 
     for (auto item : items) {
         item->SetArena(arena);
         item->Spawn(true);
     }
 
-    healthBar.Init(player.GetHealth(), resolution);
+    healthBar.Init(resolution);
 
     pause = false;
 

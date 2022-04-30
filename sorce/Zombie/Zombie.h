@@ -5,7 +5,7 @@ using namespace sf;
 
 class Player;
 
-enum class ZombieTypes{
+enum class ZombieTypes {
 	BLOATER,
 	CHASER,
 	CRAWLER,
@@ -29,7 +29,7 @@ enum class zombieStatus {
 class Zombie {
 private:
 	ZombieTypes zombieTypes;
-	
+
 	Vector2f position;
 	Sprite sprite;
 

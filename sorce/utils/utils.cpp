@@ -56,7 +56,7 @@ int utils::RandomRange(int min, int max)
 
 bool utils::RandomBool()
 {
-	return (gen() % 2 == 1)? true : false;
+	return (gen() % 2 == 1) ? true : false;
 }
 
 Vector2f utils::NomalizeVector(Vector2f vector)
