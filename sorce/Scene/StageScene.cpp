@@ -72,7 +72,7 @@ void StageScene::Update(Time& dt)
         pause = true;
     }
 
-    if (zombieCount <= 0) {
+    if (zombieCount <= 8) {
         ++GameVal::wave;
         sceneManager.ChangeScene(SceneType::LEVELUP);
     }

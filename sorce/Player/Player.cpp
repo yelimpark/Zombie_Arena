@@ -224,21 +224,7 @@ bool Player::UpdateCollision(const std::list<Pickup*>& items)
 
 	for (auto item : items) {
 		if (bounds.intersects(item->GetBlobalBounds())) {
-			switch (item->GetType())
-			{
-			case PickupTypes::Ammo:
-				item->GotIt();
-				rebar.Init();
-				break;
-
-			case PickupTypes::Health:
-				GetHealthItem(item->GotIt());
-				break;
-
-			default:
-				break;
-			}
-			
+			item->GotIt();
 			isCollied = true;
 
 		}
