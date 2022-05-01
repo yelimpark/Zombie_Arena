@@ -58,7 +58,7 @@ void UIManager::Update(int numOfZombies, int bullets, Vector2i position)
 	textScore.setPosition(position.x * 0.18f, position.y * 0.1f);
 
 	stringstream hs;
-	hs << "High Score = " << score;
+	hs << "High Score = " << GameVal::hiScore;
 	textHighScore.setString(hs.str());
 	textHighScore.setPosition(position.x * 0.7f, position.y * 0.1f);
 
