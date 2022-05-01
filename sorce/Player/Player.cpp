@@ -200,7 +200,7 @@ void Player::GetHealthItem(int amount)
 	}
 }
 
-void Player::UpgradeMaxHealth(int amount)
+void Player::UpgradeMaxHealth()
 {
 	maxHealth += START_HEALTH * 0.2;
 }

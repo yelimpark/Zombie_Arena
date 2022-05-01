@@ -75,7 +75,7 @@ public:
 
 	void GetHealthItem(int amount);
 
-	void UpgradeMaxHealth(int amount);
+	void UpgradeMaxHealth();
 
 	int UpdateCollision(const std::vector<Zombie*>& zombies, std::vector<Blood*>& bloods);
 

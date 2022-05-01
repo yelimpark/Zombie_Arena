@@ -1,10 +1,9 @@
 #include "LevelUpScene.h"
-
+#include "../Bullet/Bullet.h"
 #include "../utils/TextureHolder.h"
 #include "../utils/InputManager.h"
 #include "../Framework/Framework.h"
 #include"../utils/SceneManager.h"
-
 #include <iostream>
 #include <sstream>
 
@@ -14,102 +13,130 @@ LevelUpScene::LevelUpScene(SceneManager& sceneManager)
 	:Scene(sceneManager),
 	window(Framework::Getwindow()),
 	resolution(Framework::GetResolution()),
-	mainView(Framework::GetUIView())
+	mainView(Framework::GetGameView()),pickup(PickupTypes::Count)
 {
+
 }
 
 bool LevelUpScene::Init()
 {
 	bg.setTexture(TextureHolder::getTexture("graphics/background.png"));
 
-	textLevel.setFont(FontHolder::getfont("fonts/zombiecontrol.ttf"));
-	textLevel.setCharacterSize(90);
-	textLevel.setFillColor(Color::White);
-	textLevel.setPosition(150, 260);
+	for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
+	{
+		menu[i].setFont(FontHolder::getfont("fonts/zombiecontrol.ttf"));
+		menu[i].setFillColor(Color::Red);
+		menu[i].setCharacterSize(90);
+	}
+	
+	menu[0].setString("1- Increased rate of fire");
+	menu[0].setPosition(150, 1080 / (MAX_NUMBER_OF_ITEMS + 4) * 1);
 
-	// 수정할 일 없는 단순 텍스트에 ss 사용한 이유는 ???
-	// 딱히 없다면 그냥 string 씁시다~~
-	std::stringstream levelUpStream;
-	levelUpStream <<
-		"1- Increased rate of fire" <<
-		"\n2- Increased clip size(next reload)" <<
-		"\n3- Increased max health" <<
-		"\n4- Increased run speed" <<
-		"\n5- More and better health pickups" <<
-		"\n6- More and better ammo pickups";
-	textLevel.setString(levelUpStream.str());
+	menu[1].setString("\n2- Increased clip size(next reload)");
+	menu[1].setPosition(150, 1080 / (MAX_NUMBER_OF_ITEMS + 1) * 1);
+
+	menu[2].setString("\n3- Increased max health");
+	menu[2].setPosition(150, 1080 / (MAX_NUMBER_OF_ITEMS + 1) * 2);
+	
+	menu[3].setString("\n4- Increased run speed");
+	menu[3].setPosition(150, 1080 / (MAX_NUMBER_OF_ITEMS + 1) * 3);
+	
+	menu[4].setString("\n5- More and better ammo pickups");
+	menu[4].setPosition(150, 1080 / (MAX_NUMBER_OF_ITEMS + 1) * 4);
+
+	menu[5].setString("\n6- More and better health pickups");
+	menu[5].setPosition(150, 1080 / (MAX_NUMBER_OF_ITEMS + 1) * 5);
+	
+
+	selectIndex = 0;
+
+	mainView.setCenter(resolution.x * 0.5f, resolution.y * 0.5f);
+
+
 	return true;
 }
 
 void LevelUpScene::Update(Time& dt)
 {
-	if (InputManager::GetKeyDown(Keyboard::Num1)) {
-		// 총알 발사 속도 !!!
-		sceneManager.ChangeScene(SceneType::STAGE);
+
+	if (InputManager::GetKeyDown(Keyboard::Up))
+	{
+		MoveUp();
 	}
-	if (InputManager::GetKeyDown(Keyboard::Num2)) {
-		GameVal::megazine += 5;
-		sceneManager.ChangeScene(SceneType::STAGE);
+	if (InputManager::GetKeyDown(Keyboard::Down))
+	{
+		MoveDown();
+	}
+	if (InputManager::GetKeyDown(Keyboard::Enter))
+	{
+		switch (GetPressedMenu())
+		{
+		case 0:
+			//firerate
+			sceneManager.ChangeScene(SceneType::STAGE);
+			break;
+		case 1:
+			GameVal::megazine += 5;
+			sceneManager.ChangeScene(SceneType::STAGE);
+			break;
+		case 2:
+			player.UpgradeMaxHealth();
+			sceneManager.ChangeScene(SceneType::STAGE);
+			break;
+		case 3:
+			player.UpgradeSpeed();
+			sceneManager.ChangeScene(SceneType::STAGE);
+			break;
+		case 4:
+			pickup.Update(2.f, PickupTypes::Ammo);
+			sceneManager.ChangeScene(SceneType::STAGE);
+			break;
+		case 5:
+			pickup.Update(2.f, PickupTypes::Health);
+			sceneManager.ChangeScene(SceneType::STAGE);
+			break;
+		}
 	}
 
-	// .... 나머지 처리
+}
 
-	//switch (event.type)
-	//{
-	//case Event::KeyPressed:
-	//	switch (event.key.code)
-	//	{
-	//	case Keyboard::Num1:
-	//		//Increased rate of fire
-	//		//총알 갯수늘려주기
-	//		sceneManager.ChangeScene(SceneType::STAGE);
-	//		break;
-	//	case Keyboard::Num2:
-	//		//Increased clip size(next reload)
-	//		//탄창늘리기
-	//		sceneManager.ChangeScene(SceneType::STAGE);
-	//		break;
-	//	case Keyboard::Num3:
-	//		//Increased max health
-	//		/*Player.UpgradeMaxHealth();*/
-	//		// 플레이어 건강 늘려주기
-	//		sceneManager.ChangeScene(SceneType::STAGE);
-	//		break;
-	//	case Keyboard::Num4:
-	//		//Increased run speed
-	//		//스피드 늘려주기
-	//		sceneManager.ChangeScene(SceneType::STAGE);
-	//		break;
-	//	case Keyboard::Num5:
-	//		//More and better health pickup
-	//		//health 아이템늘려주기
-	//		sceneManager.ChangeScene(SceneType::STAGE);
-	//		break;
-	//	case Keyboard::Num6:
-	//		// More and better ammo pickups
-	//		//ammo 아이템늘려주기
+void LevelUpScene::MoveUp()
+{
+	if (selectIndex - 1 >= 0)
+	{
+		menu[selectIndex].setFillColor(Color::Red);
+		selectIndex--;
+		menu[selectIndex].setFillColor(Color::White);
+	}
+}
 
-	//		break;
-
-	//	default:
-	//		break;
-	//	}
-	//	break;
-	//}
-	//if (InputManager::GetKeyDown(Keyboard::Enter)) {
-	//	sceneManager.ChangeScene(SceneType::STAGE);
-	//}
+void LevelUpScene::MoveDown()
+{
+	if (selectIndex + 1 < MAX_NUMBER_OF_ITEMS)
+	{
+		menu[selectIndex].setFillColor(Color::Red);
+		selectIndex++;
+		menu[selectIndex].setFillColor(Color::White);
+	}
 }
 
 void LevelUpScene::Render()
 {
-	window.setView(mainView);
 	window.draw(bg);
-	window.draw(textLevel);
+
+	for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
+	{
+		window.draw(menu[i]);
+	}
 }
 
 void LevelUpScene::Release()
 {
+}
+
+int LevelUpScene::GetPressedMenu()
+{
+	return selectIndex;
 }
 
 LevelUpScene::~LevelUpScene()

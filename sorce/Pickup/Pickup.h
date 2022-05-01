@@ -6,6 +6,7 @@ using namespace sf;
 enum class PickupTypes {
 	Ammo,
 	Health,
+	Count
 };
 
 class Pickup {
@@ -28,7 +29,7 @@ private:
 public:
 	Pickup(PickupTypes type);
 
-	void Update(float dt);
+	void Update(float dt, PickupTypes type);
 
 	void Spawn(bool spawn);
 	int GotIt();

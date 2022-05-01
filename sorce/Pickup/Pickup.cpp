@@ -1,6 +1,7 @@
 #include "Pickup.h"
 #include "../utils/TextureHolder.h"
 #include "../utils/utils.h"
+#include "../utils/GameVal.h"
 #include <iostream>
 
 Pickup::Pickup(PickupTypes type) : type(type)
@@ -26,7 +27,7 @@ Pickup::Pickup(PickupTypes type) : type(type)
 	Spawn(false);
 }
 
-void Pickup::Update(float dt)
+void Pickup::Update(float dt, PickupTypes type)
 {
 	timer -= dt;
 	if (timer < 0.f) {

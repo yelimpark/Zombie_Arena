@@ -89,7 +89,8 @@ void StageScene::Update(Time& dt)
     }
 
     for (auto item : items) {
-        item->Update(dt.asSeconds());
+        item->Update(dt.asSeconds(),PickupTypes::Ammo);
+        item->Update(dt.asSeconds(),PickupTypes::Health);
     }
 
     for (auto blood : bloods) {
