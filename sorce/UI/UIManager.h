@@ -21,8 +21,6 @@ private:
 	Sprite sprite;
 
 	int numOfZombies;
-	int score;
-	int highScore;
 
 	static bool isInitUIFontInfo;
 

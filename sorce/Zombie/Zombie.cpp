@@ -48,6 +48,10 @@ bool Zombie::OnHitted()
 	if (health <= 0)
 	{
 		GameVal::score += score;
+		if (GameVal::score >= GameVal::hiScore)
+		{
+			GameVal::hiScore = GameVal::score;
+		}
 		Isdead = true;
 	}
 	return Isdead;

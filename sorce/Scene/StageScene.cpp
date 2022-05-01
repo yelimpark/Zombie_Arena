@@ -109,6 +109,7 @@ void StageScene::Update(Time& dt)
         healthBar.Update(player.GetHealth());
     }
 
+    
     ui.Update(zombieCount, player.GetLeftBullets(), resolution);
     mainView.setCenter(player.GetPosition());
 }

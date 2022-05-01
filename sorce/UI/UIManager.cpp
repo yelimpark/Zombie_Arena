@@ -9,7 +9,6 @@
 bool UIManager::isInitUIFontInfo = false;
 
 UIManager::UIManager()
-	: score(0)
 {
 	FontHolder::getfont("fonts/zombiecontrol.ttf");
 

@@ -13,5 +13,5 @@ public:
 	// 그외 강화 트리 정보
 
 	static void Init();
-	void UpdateHScore();
+	static int GetHighScore();
 };

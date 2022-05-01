@@ -10,5 +10,10 @@ void GameVal::Init()
 	wave = 1;
 	score = 0;
 	megazine = 24;
-	hiScore = 0;
+	hiScore = GetHighScore();
+}
+
+int GameVal::GetHighScore()
+{
+	return hiScore;
 }
